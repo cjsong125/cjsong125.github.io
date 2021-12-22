@@ -203,4 +203,70 @@ $$</p>
         <tag>数组</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Python中的*args和**kwargs</title>
+    <url>/pyArgsKwargs/</url>
+    <content><![CDATA[<h1 id="args和-kwargs"><a href="#args和-kwargs" class="headerlink" title="*args和**kwargs"></a>*args和**kwargs</h1><p><code>*args</code> 和 <code>**kwargs</code> 主要用于函数定义。 你可以将不定数量的参数传递给一个函数。</p>
+<p>这里的不定的意思是：预先并不知道, 函数使用者会传递多少个参数给你, 所以在这个场景下使用这两个关键字。</p>
+<ul>
+<li><p><code>*args</code> 是用来发送一个非键值对的可变数量的参数列表给一个函数.</p>
+<p>这里有个例子帮你理解这个概念:</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def test_var_args(f_arg, *argv):</span><br><span class="line">    print(&quot;first normal arg:&quot;, f_arg)</span><br><span class="line">    for arg in argv:</span><br><span class="line">        print(&quot;another arg through *argv:&quot;, arg)</span><br><span class="line"></span><br><span class="line">test_var_args(&#x27;yasoob&#x27;, &#x27;python&#x27;, &#x27;eggs&#x27;, &#x27;test&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>这会产生如下输出:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">first normal arg: yasoob</span><br><span class="line">another arg through *argv: python</span><br><span class="line">another arg through *argv: eggs</span><br><span class="line">another arg through *argv: test</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p><code>**kwargs</code> 允许你将不定长度的<strong>键值对</strong>, 作为参数传递给一个函数。 如果你想要在一个函数里处理<strong>带名字的参数</strong>, 你应该使用<code>**kwargs</code>。</p>
+<p>这里有个让你上手的例子:</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greet_me</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    <span class="keyword">for</span> key, value <span class="keyword">in</span> kwargs.items():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&#123;0&#125; == &#123;1&#125;&quot;</span>.<span class="built_in">format</span>(key, value))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>greet_me(name=<span class="string">&quot;yasoob&quot;</span>)</span><br><span class="line">name == yasoob</span><br></pre></td></tr></table></figure>
+
+<p>现在你可以看出我们怎样在一个函数里, 处理了一个<strong>键值对</strong>参数了。</p>
+<p>这就是<code>**kwargs</code>的基础, 而且你可以看出它有多么管用。 接下来让我们谈谈，你怎样使用<code>*args</code> 和 <code>**kwargs</code>来调用一个参数为列表或者字典的函数。</p>
+<ul>
+<li><p>使用*args和**kwargs来调用函数</p>
+<p>那现在我们将看到怎样使用<code>*args</code>和<code>**kwargs</code> 来调用一个函数。 假设，你有这样一个小函数：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_args_kwargs</span>(<span class="params">arg1, arg2, arg3</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;arg1:&quot;</span>, arg1)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;arg2:&quot;</span>, arg2)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;arg3:&quot;</span>, arg3)</span><br></pre></td></tr></table></figure>
+
+<p>你可以使用<code>*args</code>或<code>**kwargs</code>来给这个小函数传递参数。 下面是怎样做：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 首先使用 *args</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>args = (<span class="string">&quot;two&quot;</span>, <span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>test_args_kwargs(*args)</span><br><span class="line">arg1: two</span><br><span class="line">arg2: <span class="number">3</span></span><br><span class="line">arg3: <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在使用 **kwargs:</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>kwargs = &#123;<span class="string">&quot;arg3&quot;</span>: <span class="number">3</span>, <span class="string">&quot;arg2&quot;</span>: <span class="string">&quot;two&quot;</span>, <span class="string">&quot;arg1&quot;</span>: <span class="number">5</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>test_args_kwargs(**kwargs)</span><br><span class="line">arg1: <span class="number">5</span></span><br><span class="line">arg2: two</span><br><span class="line">arg3: <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>标准参数与<code>*args、**kwargs</code>在使用时的顺序</p>
+<p>那么如果你想在函数里同时使用所有这三种参数， 顺序是这样的：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">some_func(fargs, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>何时使用？</p>
+<p>这需要根据需求而定。最常见的用例是在写函数装饰器的时候。</p>
+<p>此外它也可以用来做猴子补丁(monkey patching)。猴子补丁的意思是在程序运行时(runtime)修改某些代码。 打个比方，你有一个类，里面有个叫<code>get_info</code>的函数会调用一个API并返回相应的数据。如果我们想测试它，可以把API调用替换成一些测试数据。例如：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> someclass</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_info</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Test data&quot;</span></span><br><span class="line"></span><br><span class="line">someclass.get_info = get_info</span><br></pre></td></tr></table></figure>
+
+
+
+<p>文章内容来自：<a href="https://docs.pythontab.com/interpy/args_kwargs/When_to_use/">https://docs.pythontab.com/interpy/args_kwargs/When_to_use/</a></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
 </search>
