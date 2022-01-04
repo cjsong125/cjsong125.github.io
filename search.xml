@@ -278,14 +278,19 @@ $$</p>
 <span id="more"></span>
 
 <h1 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1.两数之和"></a>1.两数之和</h1><p>题目：</p>
-<p><img src="/algo-interviewTop-easy/.%5Calgo-interviewTop-easy%5C1-1.jpg"></p>
+<p><img src="/.%5Calgo-interviewTop-easy%5C1-1.jpg"></p>
 <p>解析：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 哈希表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span></span><br><span class="line">        <span class="comment"># 建立一个哈希表</span></span><br><span class="line">        hashtable = <span class="built_in">dict</span>()</span><br><span class="line">        <span class="keyword">for</span> i, num <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">            <span class="keyword">if</span> target - num <span class="keyword">in</span> hashtable:</span><br><span class="line">                <span class="keyword">return</span> [hashtable[target - num], i]</span><br><span class="line">            hashtable[nums[i]] = i</span><br><span class="line">        <span class="keyword">return</span> []</span><br></pre></td></tr></table></figure>
 
 <h1 id="13-罗马数字转整数"><a href="#13-罗马数字转整数" class="headerlink" title="13.罗马数字转整数"></a>13.罗马数字转整数</h1><p>题目：</p>
-<p><img src="/algo-interviewTop-easy/.%5Calgo-interviewTop-easy%5C13-1.jpg"></p>
+<p><img src="/.%5Calgo-interviewTop-easy%5C13-1.jpg"></p>
 <p>解析：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">romanToInt</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        Roman2Int = &#123;<span class="string">&#x27;I&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;V&#x27;</span>:<span class="number">5</span>,<span class="string">&#x27;X&#x27;</span>:<span class="number">10</span>,<span class="string">&#x27;L&#x27;</span>:<span class="number">50</span>,<span class="string">&#x27;C&#x27;</span>:<span class="number">100</span>,<span class="string">&#x27;D&#x27;</span>:<span class="number">500</span>,<span class="string">&#x27;M&#x27;</span>:<span class="number">1000</span>&#125;</span><br><span class="line">        Int = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s) - <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> Roman2Int[s[index]] &lt; Roman2Int[s[index + <span class="number">1</span>]]:</span><br><span class="line">                Int -= Roman2Int[s[index]]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                Int += Roman2Int[s[index]]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Int + Roman2Int[s[-<span class="number">1</span>]]</span><br></pre></td></tr></table></figure>
+
+<h1 id="14-最长公共前缀"><a href="#14-最长公共前缀" class="headerlink" title="14.最长公共前缀"></a>14.最长公共前缀</h1><p>题目：</p>
+<p><img src="/.%5Calgo-interviewTop-easy%5C14-1.jpg"></p>
+<p>解析:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonPrefix</span>(<span class="params">self, strs: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="built_in">str</span>:</span></span><br><span class="line">        res = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 求出所有字符串中最短的字符串长度</span></span><br><span class="line">        str_len = <span class="built_in">len</span>(strs[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">str</span> <span class="keyword">in</span> strs:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(<span class="built_in">str</span>) &lt; str_len:</span><br><span class="line">                str_len = <span class="built_in">len</span>(<span class="built_in">str</span>)</span><br><span class="line">		</span><br><span class="line">        <span class="comment"># 字符串中一个一个字符比较</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(str_len):</span><br><span class="line">            c = strs[<span class="number">0</span>][i]</span><br><span class="line">            <span class="keyword">for</span> <span class="built_in">str</span> <span class="keyword">in</span> strs:</span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">str</span>[i] != c:</span><br><span class="line">                    <span class="keyword">return</span> res</span><br><span class="line">            res += c</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -295,6 +300,36 @@ $$</p>
         <tag>算法</tag>
         <tag>python</tag>
         <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>net-hierarchicalDivision</title>
+    <url>/net-hierarchicalDivision/</url>
+    <content><![CDATA[<ul>
+<li>常见的计算机网络体系结构</li>
+</ul>
+<p><img src="/D:/Learning\PersonalBlog\CodeChenBlog\source_posts\net-hierarchicalDivision\image-20211222215636759.png"></p>
+<blockquote>
+<ul>
+<li>物理层：<strong>该层为上层协议提供了一个传输数据的可靠的物理媒体。简单的说，物理层确保原始的数据可在各种物理媒体上传输。</strong>物理层记住两个重要的设备名称，中继器（Repeater，也叫放大器）和集线器。</li>
+<li>数据链路层：该层的作用包括：物理地址寻址、数据的成帧、流量控制、数据的检错、重发等。基本数据单位为帧。主要的协议为以太网协议。两个重要的设备名称为网桥和交换机。</li>
+<li>网络层：具体功能包括寻址和路由选择、连接的建立、保持和终止等。它提供的服务使传输层不需要了解网络中的数据传输和交换技术。网络层中涉及众多的协议，其中包括最重要的协议，也是TCP/IP的核心协议——IP协议。IP协议的主要功能有：无连接数据报传输、数据报路由选择和差错控制。</li>
+<li>传输层：传输层负责将上层数据分段并提供端到端的、可靠的或不可靠的传输。此外，传输层还要处理端到端的差错控制和流量控制问题。包含的主要协议：TCP协议（Transmission Control Protocol，传输控制协议）、UDP协议（User Datagram Protocol，用户数据报协议）；重要设备：网关。</li>
+<li>会话层：会话层管理主机之间的会话进程，即负责建立、管理、终止进程之间的会话。会话层还利用在数据中插入校验点来实现数据的同步。</li>
+<li>表示层：表示层对上层数据或信息进行变换以保证一个主机应用层信息可以被另一个主机的应用程序理解。表示层的数据转换包括数据的加密、压缩、格式转换等。</li>
+<li>应用层：为操作系统或网络应用程序提供访问网络服务的接口。</li>
+</ul>
+<p>会话层、表示层和应用层重点：</p>
+<ul>
+<li>1&gt; 数据传输基本单位为报文；</li>
+<li>2&gt; 包含的主要协议：FTP（文件传送协议）、Telnet（远程登录协议）、DNS（域名解析协议）、SMTP（邮件传送协议），POP3协议（邮局协议），HTTP协议（Hyper Text Transfer Protocol）。</li>
+</ul>
+</blockquote>
+<p><img src="/D:/Learning\PersonalBlog\CodeChenBlog\source_posts\net-hierarchicalDivision\image-20211222221854834.png"></p>
+<p>数据传输过程，详情看：<a href="https://www.bilibili.com/video/BV1c4411d7jb?p=9&amp;spm_id_from=pageDriver">https://www.bilibili.com/video/BV1c4411d7jb?p=9&amp;spm_id_from=pageDriver</a></p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
 </search>
