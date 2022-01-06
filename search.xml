@@ -336,12 +336,14 @@ $$</p>
   <entry>
     <title>Docker</title>
     <url>/docker-base/</url>
-    <content><![CDATA[<h1 id="比较Docker和虚拟机技术的不同"><a href="#比较Docker和虚拟机技术的不同" class="headerlink" title="比较Docker和虚拟机技术的不同"></a>比较Docker和虚拟机技术的不同</h1><ul>
+    <content><![CDATA[<p>Docker可以理解为自带环境的软件系统</p>
+<span id="more"></span>
+
+<h1 id="比较Docker和虚拟机技术的不同"><a href="#比较Docker和虚拟机技术的不同" class="headerlink" title="比较Docker和虚拟机技术的不同"></a>比较Docker和虚拟机技术的不同</h1><ul>
 <li>传统虚拟机，虚拟出一条硬件，运行一个完整的操作系统，然后在这个系统上安装和运行软件</li>
 <li>容器内的应用直接运行在宿主机的内容，容器是没有自己的内核的，也没有虚拟我们的硬件，所以就轻便了</li>
 <li>每个容器间是互相隔离，每个容器内都有一个属于自己的文件系统，互不影响</li>
 </ul>
-<p>Docker可以理解为自带环境的软件系统</p>
 <blockquote>
 <p>DevOps（开发、运维）</p>
 </blockquote>
