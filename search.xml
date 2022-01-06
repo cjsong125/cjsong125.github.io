@@ -333,4 +333,71 @@ $$</p>
         <tag>计算机网络</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Docker</title>
+    <url>/docker-base/</url>
+    <content><![CDATA[<h1 id="比较Docker和虚拟机技术的不同"><a href="#比较Docker和虚拟机技术的不同" class="headerlink" title="比较Docker和虚拟机技术的不同"></a>比较Docker和虚拟机技术的不同</h1><ul>
+<li>传统虚拟机，虚拟出一条硬件，运行一个完整的操作系统，然后在这个系统上安装和运行软件</li>
+<li>容器内的应用直接运行在宿主机的内容，容器是没有自己的内核的，也没有虚拟我们的硬件，所以就轻便了</li>
+<li>每个容器间是互相隔离，每个容器内都有一个属于自己的文件系统，互不影响</li>
+</ul>
+<p>Docker可以理解为自带环境的软件系统</p>
+<blockquote>
+<p>DevOps（开发、运维）</p>
+</blockquote>
+<p><strong>应用更快速的交付和部署</strong></p>
+<p>传统：一堆帮助文档，安装程序</p>
+<p>Docker：打包镜像发布测试，一键运行</p>
+<p><strong>更便捷的升级和扩缩容</strong></p>
+<p>使用了Docker之后，我们部署应用就和搭积木一样！</p>
+<p>项目打包为一个镜像，扩展服务器时直接运行镜像即可</p>
+<p><strong>更简单的系统运维</strong></p>
+<p>在容器化之后，我们的开发，测试环境都是高度一致的</p>
+<p><strong>更高效的计算资源利用</strong></p>
+<p>Docker是内核级别的虚拟化，可以在一个物理机上运行很多容器实例，服务器的性能可以被压榨到极致</p>
+<h1 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h1><h2 id="Docker的基本组成"><a href="#Docker的基本组成" class="headerlink" title="Docker的基本组成"></a>Docker的基本组成</h2><p><img src="/docker-base/Learning/PersonalBlog\CodeChenBlog\source_posts\docker-base\1.jpg"></p>
+<p><strong>镜像（image）：</strong></p>
+<p>docker镜像就好比是一个模板，可以通过这个模板来创建容器服务，Tomcat镜像==》run==》Tomcat01容器（提供服务器）</p>
+<p><strong>容器（container）：</strong></p>
+<p>docker利用容器技术，独立运行一个或者一个组应用，通过镜像来创建的。</p>
+<p>启动，停止，删除，基本命令</p>
+<p>目前就可以把这个容器理解为就是一个简易的Linux系统</p>
+<p><strong>仓库（repository）：</strong></p>
+<p>仓库就是存放镜像的地方</p>
+<p>仓库分为公有仓库和私有仓库</p>
+<h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><blockquote>
+<p>安装</p>
+</blockquote>
+<p>帮助文档：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 1、卸载旧的版本</span></span><br><span class="line">sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br><span class="line">                  </span><br><span class="line"><span class="meta">#</span><span class="bash"> 2、需要的安装包</span></span><br><span class="line">sudo yum install -y yum-utils</span><br><span class="line">    </span><br><span class="line"><span class="meta">#</span><span class="bash"> 3、设置镜像的仓库</span></span><br><span class="line">sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo #默认的国外的</span><br><span class="line">    </span><br><span class="line">sudo yum-config-manager \</span><br><span class="line">    --add-repo \ </span><br><span class="line">	http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo #换成阿里云的</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新yum</span></span><br><span class="line">yum makecache fast</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4、安装Docker相关东西 docker-ce社区版 ee企业版</span></span><br><span class="line">sudo yum install docker-ce docker-ce-cli containerd.io</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看版本</span></span><br><span class="line">docker version</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 5、启动Docker</span></span><br><span class="line">sudo systemctl start docker</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 6、测试运行hello world</span></span><br><span class="line">sudo docker run hello-world</span><br><span class="line"><span class="meta">#</span><span class="bash"> 最初是没有hello-world镜像的，运行命令后会自动下载</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 7、查看下载的镜像</span></span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p><img src="/docker-base/Learning/PersonalBlog\CodeChenBlog\source_posts\docker-base\2.jpg"></p>
+<h2 id="卸载docker"><a href="#卸载docker" class="headerlink" title="卸载docker"></a>卸载docker</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 1、卸载依赖</span></span><br><span class="line">sudo yum remove docker-ce docker-ce-cli containerd.io</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2、删除资源</span></span><br><span class="line">sudo rm -rf /var/lib/docker</span><br><span class="line">sudo rm -rf /var/lib/containerd</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> /var/lib/docker  docker的默认工作路径</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
 </search>
