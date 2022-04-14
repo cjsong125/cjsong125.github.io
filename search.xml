@@ -6073,4 +6073,106 @@ Never write another getter or equals method again, with one annotation your clas
         <tag>LVS</tag>
       </tags>
   </entry>
+  <entry>
+    <title>nginx入门</title>
+    <url>/nginx-base/</url>
+    <content><![CDATA[<h1>Nginx简介</h1>
+<p><em>Nginx</em> (engine x) 是一个高性能的<a href="https://baike.baidu.com/item/HTTP">HTTP</a>和<a href="https://baike.baidu.com/item/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/7793488">反向代理</a>web服务器，同时也提供了IMAP/POP3/SMTP服务。</p>
+<ul>
+<li>
+<p>Nginx是一款<a href="https://baike.baidu.com/item/%E8%BD%BB%E9%87%8F%E7%BA%A7/10002835">轻量级</a>的<a href="https://baike.baidu.com/item/Web/150564">Web</a> 服务器/<a href="https://baike.baidu.com/item/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/7793488">反向代理</a>服务器及<a href="https://baike.baidu.com/item/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/111106">电子邮件</a>（IMAP/POP3）代理服务器，在BSD-like 协议下发行。其特点是占有内存少，<a href="https://baike.baidu.com/item/%E5%B9%B6%E5%8F%91/11024806">并发</a>能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好，中国大陆使用nginx网站用户有：百度、<a href="https://baike.baidu.com/item/%E4%BA%AC%E4%B8%9C/210931">京东</a>、<a href="https://baike.baidu.com/item/%E6%96%B0%E6%B5%AA/125692">新浪</a>、<a href="https://baike.baidu.com/item/%E7%BD%91%E6%98%93/185754">网易</a>、<a href="https://baike.baidu.com/item/%E8%85%BE%E8%AE%AF/112204">腾讯</a>、<a href="https://baike.baidu.com/item/%E6%B7%98%E5%AE%9D/145661">淘宝</a>等。</p>
+</li>
+<li>
+<p>Nginx 是高性能的 HTTP 和反向代理的web服务器，处理高并发能力是十分强大的，能经受高负 载的考验,有报告表明能支持高达 50,000 个并发连接数。</p>
+</li>
+</ul>
+<span id="more"></span>
+<h1>正向代理和反向代理</h1>
+<p><strong>正向代理</strong></p>
+<p>Nginx 不仅可以做反向代理，实现负载均衡。还能用作正向代理来进行上网等功能。 <strong>正向代理：如果把局域网外的 Internet 想象成一个巨大的资源库，则局域网中的客户端要访 问 Internet，则需要通过代理服务器来访问，这种代理服务就称为正向代理。</strong></p>
+<ul>
+<li>简单一点：通过代理服务器来访问服务器的过程 就叫 正向代理。</li>
+<li>需要在客户端配置代理服务器进行指定网站访问</li>
+</ul>
+<p><img src="/D:%5CLearning%5CPersonalBlog%5CCodeChenBlog%5Csource_posts%5Cnginx-base%5CSnipaste_2022-03-08_16-26-38.jpg" alt></p>
+<p><strong>反向代理</strong></p>
+<ul>
+<li>反向代理，<strong>其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问</strong>。</li>
+<li><strong>我们只 需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，在返 回给客户端</strong>，此时反向代理服务器和目标服务器对外就是一个服务器，<strong>暴露的是代理服务器 地址，隐藏了真实服务器 IP 地址。</strong></li>
+</ul>
+<p><img src="/D:%5CLearning%5CPersonalBlog%5CCodeChenBlog%5Csource_posts%5Cnginx-base%5CSnipaste_2022-03-08_16-28-06.jpg" alt></p>
+<p>简单理解就是，正向代理，是代理客户端给服务器，服务器只知道有请求但不知道是谁发的。反向代理是代理服务器。客户端发送请求但是不知道是哪个服务器接收了发送的请求。</p>
+<h1>负载均衡</h1>
+<blockquote>
+<p>Nginx提供的负载均衡策略有2种：内置策略和扩展策略。内置策略为轮询，加权轮询，lp hash。扩展策略，就天马行空。</p>
+</blockquote>
+<ul>
+<li>增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的 情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，也就是我们所说的负 载均衡</li>
+<li>客户端发送多个请求到服务器，服务器处理请求，有一些可能要与数据库进行交互，服 务器处理完毕后，再将结果返回给客户端。</li>
+</ul>
+<p><strong>轮询</strong></p>
+<p>请求依次分给服务器，服务器的访问平等</p>
+<p><img src="/D:%5CLearning%5CPersonalBlog%5CCodeChenBlog%5Csource_posts%5Cnginx-base%5CSnipaste_2022-03-08_16-31-38.jpg" alt></p>
+<p><strong>加权轮询</strong></p>
+<p>权重大的服务器承担更多的访问请求</p>
+<p><img src="/D:%5CLearning%5CPersonalBlog%5CCodeChenBlog%5Csource_posts%5Cnginx-base%5CSnipaste_2022-03-08_16-32-27.jpg" alt></p>
+<p>iphash对客户端请求的ip进行hash操作，然后根据hash结果将同一个客户端ip的请求分给同一台服务器进行处理，可以解决session不共享问题。（Redis也可以解决，现在使用Redis更多）</p>
+<p><img src="/D:%5CLearning%5CPersonalBlog%5CCodeChenBlog%5Csource_posts%5Cnginx-base%5CSnipaste_2022-03-08_16-37-30.jpg" alt></p>
+<h1>动静分离</h1>
+<blockquote>
+<p>动静分离，在我们的软件开发中，有些请求是需要后台处理的，有些请求时不需要经过后台处理的（如：css、html、jpg、js等文件），这些不需要经过后台处理的文件称为静态文件，让动态网站里的动态网页根据一定规则把不变的资源和经常变的资源区分开来，动静资源做好了拆分以后，我们就可以根据静态资源的特点将其做缓存操作。提高资源响应的速度。</p>
+</blockquote>
+<p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速 度。降低原来单个服务器的压力。</p>
+<p><img src="/D:%5CLearning%5CPersonalBlog%5CCodeChenBlog%5Csource_posts%5Cnginx-base%5CSnipaste_2022-03-08_16-41-36.jpg" alt></p>
+<p>目前，通过使用nginx大大提高了我们网站的响应速度，优化了用户体验，让网站的健壮性更上一层楼。</p>
+<h1>Nginx配置文件</h1>
+<p>配置文件位置：/usr/local/nginx/conf/nginx.conf</p>
+<h2 id="nginx-的组成部分">nginx 的组成部分</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>nginx 配置文件有三部分组成：</p>
+<ul>
+<li>
+<p>全局块</p>
+<p>从配置文件开始到 events 块之间的内容，主要会设置一些影响nginx 服务器整体运行的配置指令，主要包括配 置运行 Nginx 服务器的用户（组）、允许生成的 worker process 数，进程 PID 存放路径、日志存放路径和类型以 及配置文件的引入等。<br>
+比如上面第一行配置的：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">worker_processes  1;</span><br></pre></td></tr></table></figure>
+<p>这是 Nginx 服务器并发处理服务的关键配置，worker_processes 值越大，可以支持的并发处理量也越多，但是 会受到硬件、软件等设备的制约。</p>
+</li>
+<li>
+<p>events块</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>events 块涉及的指令<strong>主要影响 Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多 work process 下的网络连接进行序列化，是否 允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求，每个 word process 可以同时支持的最大连接数等。</strong><br>
+上述例子就表示每个 work process 支持的最大连接数为 1024.<br>
+这部分的配置对 Nginx 的性能影响较大，在实际中应该灵活配置。</p>
+</li>
+<li>
+<p>第三部分</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置最频繁的部分。</p>
+<p>http 块也可以包括 http全局块、server 块。</p>
+<ul>
+<li><strong>http全局块</strong><br>
+http全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。</li>
+<li><strong>server 块</strong><br>
+这块和虚拟主机有密切关系，虚拟主机从用户角度看，和一台独立的硬件主机是完全一样的，该技术的产生是为了 节省互联网服务器硬件成本。<br>
+<strong>每个 http 块可以包括多个 server 块，而每个 server 块就相当于一个虚拟主机。</strong><br>
+<strong>而每个 server 块也分为全局 server 块，以及可以同时包含多个 locaton 块。</strong></li>
+</ul>
+<ol>
+<li><strong>全局 server 块</strong><br>
+最常见的配置是本虚拟机主机的监听配置和本虚拟主机的名称或IP配置。</li>
+<li><strong>location 块</strong><br>
+一个 server 块可以配置多个 location 块。<br>
+这块的主要作用是<strong>基于 Nginx 服务器接收到的请求字符串（例如 server_name/uri-string），对虚拟主机名称 （也可以是IP 别名）之外的字符串（例如 前面的 /uri-string）进行匹配，对特定的请求进行处理。</strong> 地址定向、数据缓 存和应答控制等功能，还有许多第三方模块的配置也在这里进行。</li>
+</ol>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
 </search>
