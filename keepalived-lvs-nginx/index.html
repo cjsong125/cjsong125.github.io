@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="集群,负载均衡," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="keepalived+lvs+nginx 在微服务项目中前段的负载均衡的稳定性是一个非常大的考验，这里我们使用keepalived+lvs+nginx完成我们前段的负载均衡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LVS（DR模式）+Keepalived+Nginx+web高可用集群">
+<meta property="og:url" content="https://cjsong125.github.io/keepalived-lvs-nginx/index.html">
+<meta property="og:site_name" content="CodeChenBlog">
+<meta property="og:description" content="keepalived+lvs+nginx 在微服务项目中前段的负载均衡的稳定性是一个非常大的考验，这里我们使用keepalived+lvs+nginx完成我们前段的负载均衡">
+<meta property="og:locale">
+<meta property="og:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_21-16-38.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_21-19-21.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_21-37-46.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_22-39-28.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_22-45-24.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_22-47-24.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_22-48-09.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_23-17-24.jpg">
+<meta property="article:published_time" content="2022-03-22T13:47:30.000Z">
+<meta property="article:modified_time" content="2022-04-14T03:27:29.009Z">
+<meta property="article:author" content="CodeChen">
+<meta property="article:tag" content="集群">
+<meta property="article:tag" content="负载均衡">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cjsong125.github.io/keepalived-lvs-nginx/Snipaste_2022-04-09_21-16-38.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://cjsong125.github.io/keepalived-lvs-nginx/"/>
+
+
+
+
+
+  <title>LVS（DR模式）+Keepalived+Nginx+web高可用集群 | CodeChenBlog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CodeChenBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cjsong125.github.io/keepalived-lvs-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPicture1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CodeChenBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LVS（DR模式）+Keepalived+Nginx+web高可用集群</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-03-22T21:47:30+08:00">
+                2022-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/keepalived-lvs-nginx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/keepalived-lvs-nginx/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读数 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>keepalived+lvs+nginx</p>
+<p>在微服务项目中前段的负载均衡的稳定性是一个非常大的考验，这里我们使用keepalived+lvs+nginx完成我们前段的负载均衡</p>
+<span id="more"></span>
+
+<h1 id="什么是高可用？"><a href="#什么是高可用？" class="headerlink" title="什么是高可用？"></a>什么是高可用？</h1><p>nginx做负载均衡，能达到分发请求的目的，但是不能很好的避免单点故障。</p>
+<p>1、Nginx集群单点问题</p>
+<ul>
+<li><p>分发器宕机</p>
+<p>假如nginx服务器挂掉了，那么所有的服务也会跟着瘫痪 。<br>一种方法是人为监控，发现主分发器宕机后，立马登录备分发器，并给它分配虚ip。<br>另一种办法是用软件来替代人来监控，自动登录备分发器，分配虚ip。</p>
+</li>
+<li><p>数据服务器宕机</p>
+<p>分发器可以自动判断数据服务器的存活状态，不对宕机服务器要数据。</p>
+</li>
+</ul>
+<p>2、keepalived介绍</p>
+<p>Keepalived的作用是检测服务器的状态，如果有一台web服务器宕机，或工作出现故障，Keepalived将检测到，并将有故障的服务器从系统中剔除，同时使 其他服务器代替该服务器的工作，当服务器工作正常后Keepalived自动将服务器加入到服务器群中，这些工作全部自动完成，不需要人工干涉，需要人工做的只是修复故障的服务器。<br>总结来说：Keepalived软件是一个监控+自愈的软件。<br>运行协议是VRRP，主分发器的keepalived会向网络中发组播，宣告自己还活着，组播地址：224.0.0.18。</p>
+<p>3、LVS</p>
+<p>在keepalived+nginx的主备容灾高可用的架构中，nginx是作为外部访问系统的唯一入口，理论上一台nginx的最大并发量可以高达50000，但是当并发量更大的时候，keepalived+nginx的高可用机制是没办法满足需求的，因为keepalived+nginx的架构中确确实实是一台nginx在工作，只有当master宕机或异常的时候，备份机才会上位。那么如何解决更大的高并发问题呢，也许你会问能不能搭建nginx集群，直接对外提供访问？很显然这是欠妥当的，因为当nginx作为外部的唯一访问入口，没办法直接以集群的形式对外提供服务，没有那么多的公网ip资源可用，既太浪费也不友好。但是在内网环境下，是可以用nginx集群（nginx横向扩展服务集合）的，当然总得有一个对外入口，所以需要在nginx集群之上，在加一层负载均衡器LVS，作为系统的唯一入口。</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>IP</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>node1</td>
+<td>192.168.31.145</td>
+<td>虚拟IP（VIP）</td>
+</tr>
+<tr>
+<td>node2（lvskeepalived1）</td>
+<td>192.168.31.93</td>
+<td>LVS+ Keepalived Master（LVS将请求负载至nginx1 或者 nginx2）</td>
+</tr>
+<tr>
+<td>node3（lvskeepalived2）</td>
+<td>192.168.31.91</td>
+<td>LVS+ Keepalived Backup （lvskeepalived1的备机）</td>
+</tr>
+<tr>
+<td>node4（nginx1）</td>
+<td>192.168.31.165</td>
+<td>Nginx1（将请求负载至后端web1 或者 web2）</td>
+</tr>
+<tr>
+<td>node5（nginx2）</td>
+<td>192.168.31.179</td>
+<td>Nginx2（将请求负载至后端web1 或者 web2）</td>
+</tr>
+<tr>
+<td>node6（web1）</td>
+<td>192.168.31.97</td>
+<td>Web1（静态web服务器）</td>
+</tr>
+<tr>
+<td>node7（web2）</td>
+<td>192.168.31.86</td>
+<td>Web2（静态web服务器）</td>
+</tr>
+</tbody></table>
+<h1 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h1><p><strong>1、在lvskeepalived1 和 lvskeepalived2 机器上面安装 ipvsadm 和 keepalived：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# yum -y install ipvsadm keepalived</span><br></pre></td></tr></table></figure>
+
+<p>查看两台负载均衡机器是否支持lvs</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# lsmod |grep ip_vs</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 上面命令没有任何反应，执行下面命令打开ipvs即可</span></span><br><span class="line">[root@node1 ~]# ipvsadm</span><br><span class="line">IP Virtual Server version 1.2.1 (size=4096)</span><br><span class="line">Prot LocalAddress:Port Scheduler Flags</span><br><span class="line"><span class="meta">  -&gt;</span><span class="bash"> RemoteAddress:Port           Forward Weight ActiveConn InActConn</span></span><br><span class="line">[root@node1 ~]# lsmod |grep ip_vs</span><br><span class="line">ip_vs                 145458  0 </span><br><span class="line">nf_conntrack          139264  1 ip_vs</span><br><span class="line">libcrc32c              12644  3 xfs,ip_vs,nf_conntrack</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2、在Nginx1和Nginx2机器上安装Nginx</strong></p>
+<p>自行安装Nginx</p>
+<p><strong>3、在web1和web2上面安装Apache</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install httpd</span><br></pre></td></tr></table></figure>
+
+<p>配置网页：</p>
+<p>实际配置网页内容应该一样，但是为了演示nginx负载均衡效果，我们将网页内容一个配置成web1, 一个配置成web2。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">在web1配置如下：</span></span><br><span class="line">cd /var/www/html</span><br><span class="line">echo &quot;web1&quot; &gt; index.html</span><br><span class="line">systemctl restart httpd</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">在web2配置如下：</span></span><br><span class="line">cd /var/www/html</span><br><span class="line">echo &quot;web2&quot; &gt; index.html</span><br><span class="line">systemctl restart httpd</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>4、配置keepalived</strong></p>
+<ul>
+<li>在lvskeepalived1（master）上配置：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# vim /etc/keepalived/keepalived.conf</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Global Configuration</span></span><br><span class="line">global_defs &#123;</span><br><span class="line">  lvs_id director1  # 指定lvs的id</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vrrp_instance LVS &#123;</span><br><span class="line">  state MASTER  # 指定当前节点为master节点</span><br><span class="line">  interface ens33       # 这里的ens33是网卡的名称，通过ifconfig或者ip addr可以查看  </span><br><span class="line">  virtual_router_id 51   # 这里指定的是虚拟路由id，master节点和backup节点需要指定一样的</span><br><span class="line">  priority 151   # 指定了当前节点的优先级，数值越大优先级越高，master节点要高于backup节点</span><br><span class="line">  advert_int 1  # 指定发送VRRP通告的间隔，单位是秒  </span><br><span class="line">  authentication &#123;</span><br><span class="line">    auth_type PASS      # 鉴权，默认通过</span><br><span class="line">    auth_pass 123456    # 鉴权访问密码</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  virtual_ipaddress &#123;</span><br><span class="line">    192.168.31.145      # 指定了虚拟ip</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Virtual Server Configuration - <span class="keyword">for</span> www server</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 后台真实主机的配置</span></span><br><span class="line">virtual_server 192.168.31.145 80 &#123;</span><br><span class="line">  delay_loop 1  # 健康检查的时间间隔</span><br><span class="line">  lb_algo rr    # 负载均衡策略，这里是轮询</span><br><span class="line">  lb_kind DR    # 调度器类型，这里是DR</span><br><span class="line">  persistence_time 1    # 指定了持续将请求打到同一台真实主机的时间长度</span><br><span class="line">  protocol TCP  # 指定了访问后台真实主机的协议类型</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> Real Server 1 configuration</span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> 指定了真实主机1的ip和端口</span></span><br><span class="line">  real_server 192.168.31.165 80 &#123;</span><br><span class="line">    weight 1    # 指定了当前主机的权重</span><br><span class="line">    TCP_CHECK &#123;</span><br><span class="line">      connection_timeout 10     # 指定了进行心跳检查的超时时间</span><br><span class="line">      nb_get_retry 3    # 指定了心跳超时之后的重复次数</span><br><span class="line">      delay_before_retry 3      # 指定了在尝试之前延迟多长时间</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> Real Server 2 Configuration</span></span><br><span class="line">  real_server 192.168.31.179 80 &#123;</span><br><span class="line">    weight 1    # 指定了当前主机的权重</span><br><span class="line">    TCP_CHECK &#123;</span><br><span class="line">      connection_timeout 10     # 指定了进行心跳检查的超时时间</span><br><span class="line">      nb_get_retry 3    # 指定了心跳超时之后的重复次数</span><br><span class="line">      delay_before_retry 3      # 指定了在尝试之前延迟多长时间</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>在lvskeepalived2（backup）上配置：</p>
+<p>lvs_id director1 改成 lvs_id director2<br>state MASTER 改成 state BACKUP<br>priority 151 改成 priority 101</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">[root@node3 ~]# vim /etc/keepalived/keepalived.conf</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Global Configuration</span></span><br><span class="line">global_defs &#123;</span><br><span class="line">  lvs_id director2  # 指定lvs的id</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> VRRP Configuration</span></span><br><span class="line">vrrp_instance LVS &#123;</span><br><span class="line">  state BACKUP  # 指定当前节点为backup节点</span><br><span class="line">  interface ens33       # 这里的ens33是网卡的名称，通过ifconfig或者ip addr可以查看  </span><br><span class="line">  virtual_router_id 101   # 这里指定的是虚拟路由id，master节点和backup节点需要指定一样的</span><br><span class="line">  priority 101   # 指定了当前节点的优先级，数值越大优先级越高，master节点要高于backup节点</span><br><span class="line">  advert_int 1  # 指定发送VRRP通告的间隔，单位是秒  </span><br><span class="line">  authentication &#123;</span><br><span class="line">    auth_type PASS      # 鉴权，默认通过</span><br><span class="line">    auth_pass 123456    # 鉴权访问密码</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  virtual_ipaddress &#123;</span><br><span class="line">    192.168.31.145      # 指定了虚拟ip</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Virtual Server Configuration - <span class="keyword">for</span> www server</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 后台真实主机的配置</span></span><br><span class="line">virtual_server 192.168.31.145 80 &#123;</span><br><span class="line">  delay_loop 1  # 健康检查的时间间隔</span><br><span class="line">  lb_algo rr    # 负载均衡策略，这里是轮询</span><br><span class="line">  lb_kind DR    # 调度器类型，这里是DR</span><br><span class="line">  persistence_time 1    # 指定了持续将请求打到同一台真实主机的时间长度</span><br><span class="line">  protocol TCP  # 指定了访问后台真实主机的协议类型</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> Real Server 1 configuration</span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> 指定了真实主机1的ip和端口</span></span><br><span class="line">  real_server 192.168.31.165 80 &#123;</span><br><span class="line">    weight 1    # 指定了当前主机的权重</span><br><span class="line">    TCP_CHECK &#123;</span><br><span class="line">      connection_timeout 10     # 指定了进行心跳检查的超时时间</span><br><span class="line">      nb_get_retry 3    # 指定了心跳超时之后的重复次数</span><br><span class="line">      delay_before_retry 3      # 指定了在尝试之前延迟多长时间</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> Real Server 2 Configuration</span></span><br><span class="line">  real_server 192.168.31.179 80 &#123;</span><br><span class="line">    weight 1    # 指定了当前主机的权重</span><br><span class="line">    TCP_CHECK &#123;</span><br><span class="line">      connection_timeout 10     # 指定了进行心跳检查的超时时间</span><br><span class="line">      nb_get_retry 3    # 指定了心跳超时之后的重复次数</span><br><span class="line">      delay_before_retry 3      # 指定了在尝试之前延迟多长时间</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>5、配置Nginx</strong></p>
+<ul>
+<li><p>在nginx1 和 nginx2 机器上面配置负载均衡：（两台机器一模一样的配置）</p>
+<p>实现将访问本机80端口的请求轮询定向到后端的两台apache服务器：</p>
+<p>我们这里只演示两台apache web 服务器， 你也可以配置多台。</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">[root@node5 conf]# vim /usr/local/nginx/conf/nginx.conf</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">user  nobody;</span></span><br><span class="line">worker_processes  auto;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">error_log  logs/error.log;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">error_log  logs/error.log  notice;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">error_log  logs/error.log  info;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">pid        logs/nginx.pid;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    #log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">    #                  &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">    #                  &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line"></span><br><span class="line">    #access_log  logs/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    tcp_nopush     on;</span><br><span class="line"></span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    #gzip  on;</span><br><span class="line"></span><br><span class="line">    upstream serverList &#123;</span><br><span class="line">	server 192.168.31.97:80;  #web server1,后端真实服务器</span><br><span class="line">	server 192.168.31.86:80;  #web server2,后端真实服务器</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        #server_name  localhost;</span><br><span class="line"></span><br><span class="line">        #charset koi8-r;</span><br><span class="line"></span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            # root   html;</span><br><span class="line">            # index  index.html index.htm;</span><br><span class="line">            proxy_pass  http://serverList; # 指向负载的列表的模块，如serverList</span><br><span class="line">	    	proxy_redirect     off;</span><br><span class="line">	    	proxy_set_header   Host             $host;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>在nginx1 和 nginx2 机器上面配置虚拟IP: (两台nginx机器， 一模一样的配置)</p>
+<p>因为我们使用的lvs调度器是DR模式，前面我们讲到过，这种模式下，对客户端的响应是真实服务器直接返回给客户端的，而真实服务器需要将响应报文中的源ip修改为虚拟ip，这里配置的虚拟ip就是起这个作用的。我们编辑/etc/init.d/lvsrs文件，写入如下内容：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@node4 conf]# vim /etc/init.d/lvsrs</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">虚拟的vip 根据自己的实际情况定义</span></span><br><span class="line">SNS_VIP=192.168.31.145</span><br><span class="line">/etc/rc.d/init.d/functions</span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">start)</span><br><span class="line">       ifconfig lo:0 $SNS_VIP netmask 255.255.255.255 broadcast $SNS_VIP</span><br><span class="line">       /sbin/route add -host $SNS_VIP dev lo:0</span><br><span class="line">       echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore</span><br><span class="line">       echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce</span><br><span class="line">       echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore</span><br><span class="line">       echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line">       sysctl -p &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">       echo &quot;RealServer Start OK&quot;</span><br><span class="line">       ;;</span><br><span class="line">stop)</span><br><span class="line">       ifconfig lo:0 down</span><br><span class="line">       route del $SNS_VIP &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">       echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore</span><br><span class="line">       echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce</span><br><span class="line">       echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore</span><br><span class="line">       echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line">       echo &quot;RealServer Stoped&quot;</span><br><span class="line">       ;;</span><br><span class="line">*)</span><br><span class="line">       echo &quot;Usage: $0 &#123;start|stop&#125;&quot;</span><br><span class="line">       exit 1</span><br><span class="line">esac</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<p>然后执行脚本：（两台Nginx）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@node4 init.d]# chmod 755 lvsrs</span><br><span class="line"></span><br><span class="line">[root@node4 init.d]# ./lvsrs start</span><br><span class="line">./lvsrs:行4: /etc/rc.d/init.d/functions: 权限不够</span><br><span class="line">SIOCADDRT: 文件已存在</span><br><span class="line">RealServer Start OK</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./keepalived-lvs-nginx/Snipaste_2022-04-09_21-16-38.jpg"></p>
+<p>查看ip lo:0 和路由是否添加成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@node4 init.d]# ip a | grep -i lo:0</span><br><span class="line">    inet 192.168.31.145/32 brd 192.168.31.145 scope global lo:0</span><br><span class="line">    </span><br><span class="line">[root@node4 init.d]# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         192.168.31.1    0.0.0.0         UG    100    0        0 ens33</span><br><span class="line">192.168.31.0    0.0.0.0         255.255.255.0   U     100    0        0 ens33</span><br><span class="line">192.168.31.145  0.0.0.0         255.255.255.255 UH    0      0        0 lo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./keepalived-lvs-nginx/Snipaste_2022-04-09_21-19-21.jpg"></p>
+<p><img src="/./keepalived-lvs-nginx/Snipaste_2022-04-09_21-37-46.jpg"></p>
+<p>如果可以看到上述结果，证明 lo:0和路由都已经配置成功。</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p><strong>1、启动Nginx服务，验证Nginx负载功能</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node4 init.d]# /usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+
+<p>测试分别访问nginx1和nginx2的网页， 可以看到请求轮询定向到后端的两台web服务器上， 所以Nginx 负载功能验证成功。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# while [ TRUR ]; do curl http://192.168.31.165:80; sleep 2 ; done</span><br><span class="line">web2</span><br><span class="line">web2</span><br><span class="line">web1</span><br><span class="line">web2</span><br><span class="line">web1</span><br><span class="line">web2</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./keepalived-lvs-nginx/Snipaste_2022-04-09_22-39-28.jpg"></p>
+<p><strong>2、启动keepalived</strong></p>
+<p>在lvskeepalived1 和 lvskeepalived2 服务器上启动keepalived.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start keepalived</span><br><span class="line">systemctl enable keepalived</span><br></pre></td></tr></table></figure>
+
+<p>过几秒就可以看到VIP在master和backup机器上面</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# ip a | grep -i ens33</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    inet 192.168.31.93/24 brd 192.168.31.255 scope global noprefixroute dynamic ens33</span><br><span class="line">    inet 192.168.31.145/32 scope global ens33</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./keepalived-lvs-nginx/Snipaste_2022-04-09_22-45-24.jpg"></p>
+<p>通过VIP访问网页：</p>
+<p><img src="/./keepalived-lvs-nginx/Snipaste_2022-04-09_22-47-24.jpg"></p>
+<p><img src="/./keepalived-lvs-nginx/Snipaste_2022-04-09_22-48-09.jpg"></p>
+<p>访问成功， 可见LVS 成功将请求转发到了后端web server 上。</p>
+<p><strong>3、keepalived高可用测试</strong></p>
+<ul>
+<li>停掉主keepalived，备份keepalived还是可以运行的</li>
+</ul>
+<p><strong>4、LVS监控真实服务测试</strong></p>
+<ul>
+<li>查看最新的虚拟ip对应的RealServer的情况<br>VIP：192.168.31.145<br>Realserver1 IP: 192.168.31.165<br>Realserver2 IP: 192.168.31.179</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# ipvsadm -Ln</span><br><span class="line">IP Virtual Server version 1.2.1 (size=4096)</span><br><span class="line">Prot LocalAddress:Port Scheduler Flags</span><br><span class="line"><span class="meta">  -&gt;</span><span class="bash"> RemoteAddress:Port           Forward Weight ActiveConn InActConn</span></span><br><span class="line">TCP  192.168.31.145:80 rr</span><br><span class="line"><span class="meta">  -&gt;</span><span class="bash"> 192.168.31.165:80            Route   1      0          0</span>         </span><br><span class="line"><span class="meta">  -&gt;</span><span class="bash"> 192.168.31.179:80            Route   1      0          0</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/./keepalived-lvs-nginx/Snipaste_2022-04-09_23-17-24.jpg"></p>
+<p>停掉其中一个Nginx也可以正常运行</p>
+<p>注意：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 开启端口</span></span><br><span class="line">/sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者关闭防火墙</span></span><br><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="docker方式"><a href="#docker方式" class="headerlink" title="docker方式"></a>docker方式</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-24-12-centos ~]# docker run -itd --name lvsKeepalived1 --privileged=true -p 101:22 centos:7</span><br><span class="line">[root@VM-24-12-centos ~]# docker run -itd --name lvsKeepalived2 --privileged=true -p 102:22 centos:7</span><br><span class="line"></span><br><span class="line">[root@VM-24-12-centos ~]# docker run --name nginx1 --privileged=true -d -p 201:80 nginx</span><br><span class="line">[root@VM-24-12-centos ~]# docker run --name nginx2 --privileged=true -d -p 202:80 nginx</span><br><span class="line"></span><br><span class="line">[root@VM-24-12-centos ~]# docker run -itd --name web1 --privileged=true -p 301:22 centos:7</span><br><span class="line">[root@VM-24-12-centos ~]# docker run -itd --name web2 --privileged=true -p 302:22 centos:7</span><br></pre></td></tr></table></figure>
+
+
+
+<p>全部容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-24-12-centos ~]# docker ps</span><br><span class="line">CONTAINER ID   IMAGE       COMMAND                  CREATED          STATUS          PORTS                                                  NAMES</span><br><span class="line">e34c86bb0435   centos:7    &quot;/bin/bash&quot;              7 seconds ago    Up 6 seconds    0.0.0.0:302-&gt;22/tcp, :::302-&gt;22/tcp                    web2</span><br><span class="line">08c818debfec   centos:7    &quot;/bin/bash&quot;              17 seconds ago   Up 16 seconds   0.0.0.0:301-&gt;22/tcp, :::301-&gt;22/tcp                    web1</span><br><span class="line">719c03f59c58   nginx       &quot;/docker-entrypoint.…&quot;   48 seconds ago   Up 47 seconds   0.0.0.0:202-&gt;80/tcp, :::202-&gt;80/tcp                    nginx2</span><br><span class="line">4411e0e5d7cb   nginx       &quot;/docker-entrypoint.…&quot;   58 seconds ago   Up 57 seconds   0.0.0.0:201-&gt;80/tcp, :::201-&gt;80/tcp                    nginx1</span><br><span class="line">495ee8a27741   centos:7    &quot;/bin/bash&quot;              13 minutes ago   Up 13 minutes   0.0.0.0:102-&gt;22/tcp, :::102-&gt;22/tcp                    lvsKeepalived2</span><br><span class="line">5c45ad280824   centos:7    &quot;/bin/bash&quot;              13 minutes ago   Up 13 minutes   0.0.0.0:101-&gt;22/tcp, :::101-&gt;22/tcp                    lvsKeepalived1</span><br><span class="line">9d54fbdb7e5f   redis       &quot;docker-entrypoint.s…&quot;   2 days ago       Up 2 days       0.0.0.0:6379-&gt;6379/tcp, :::6379-&gt;6379/tcp              myredis</span><br><span class="line">8f474f903dc2   mysql:5.7   &quot;docker-entrypoint.s…&quot;   6 days ago       Up 6 days       33060/tcp, 0.0.0.0:3313-&gt;3306/tcp, :::3313-&gt;3306/tcp   slave02</span><br><span class="line">07abacc7cfa4   mysql:5.7   &quot;docker-entrypoint.s…&quot;   6 days ago       Up 6 days       33060/tcp, 0.0.0.0:3312-&gt;3306/tcp, :::3312-&gt;3306/tcp   slave</span><br><span class="line">20a63bf1a35a   mysql:5.7   &quot;docker-entrypoint.s…&quot;   6 days ago       Up 6 days       33060/tcp, 0.0.0.0:3311-&gt;3306/tcp, :::3311-&gt;3306/tcp   master</span><br></pre></td></tr></table></figure>
+
+
+
+<p>ip地址情况</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">172.17.0.5   # nginx1</span><br><span class="line">172.17.0.6   # nginx2</span><br><span class="line">172.17.0.7  # web1</span><br><span class="line">172.17.0.8  # web1</span><br><span class="line">172.17.0.9   # lvsKeepalived1</span><br><span class="line">172.17.0.10  # lvsKeepalived2</span><br></pre></td></tr></table></figure>
+
+
+
+<p>配置lvskeepalived时，宿主机要开启ipvsadm，否则容器内会报错</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%9B%86%E7%BE%A4/" rel="tag"># 集群</a>
+          
+            <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" rel="tag"># 负载均衡</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/vue-base/" rel="next" title="vue基础">
+                <i class="fa fa-chevron-left"></i> vue基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/git-base/" rel="prev" title="git-base">
+                git-base <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPicture1.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cjsong125" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="735709343@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/1920834272" target="_blank" title="weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cjsong125.github.io" title="CodeChenBlog" target="_blank">CodeChenBlog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%AB%98%E5%8F%AF%E7%94%A8%EF%BC%9F"><span class="nav-text">什么是高可用？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">软件安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E6%96%B9%E5%BC%8F"><span class="nav-text">docker方式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CodeChen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访问数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '6BRrBnAHS7a11TcVJ70lEGpJ-gzGzoHsz',
+        appKey: 'UC71zLA2sOyVPdG7c54dpBfG',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

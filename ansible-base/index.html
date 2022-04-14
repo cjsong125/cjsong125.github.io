@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ansible," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="环境配置主机列表    主机名 IP地址 角色    control 192.168.4.253 控制节点（manager）   Node1 192.168.4.1 被控制节点（test）   Node2 192.168.4.2 被控制节点（proxy）   Node3 192.168.4.3 被控制节点（web1）   Node4 192.168.4.4 被控制节点（web2）   Node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ansible基础">
+<meta property="og:url" content="https://cjsong125.github.io/ansible-base/index.html">
+<meta property="og:site_name" content="CodeChenBlog">
+<meta property="og:description" content="环境配置主机列表    主机名 IP地址 角色    control 192.168.4.253 控制节点（manager）   Node1 192.168.4.1 被控制节点（test）   Node2 192.168.4.2 被控制节点（proxy）   Node3 192.168.4.3 被控制节点（web1）   Node4 192.168.4.4 被控制节点（web2）   Node">
+<meta property="og:locale">
+<meta property="og:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-20_15-09-10.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-20_16-26-00.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-20_16-26-33.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-20_16-27-47.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-20_16-29-08.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-20_16-30-00.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-23_15-22-51.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-23_16-17-29.jpg">
+<meta property="article:published_time" content="2022-03-18T07:12:54.000Z">
+<meta property="article:modified_time" content="2022-04-14T14:47:23.460Z">
+<meta property="article:author" content="CodeChen">
+<meta property="article:tag" content="ansible">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cjsong125.github.io/ansible-base/Learning/PersonalBlog/CodeChenBlog/source_posts/ansible-base/Snipaste_2022-03-20_15-09-10.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://cjsong125.github.io/ansible-base/"/>
+
+
+
+
+
+  <title>ansible基础 | CodeChenBlog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CodeChenBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cjsong125.github.io/ansible-base/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPicture1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CodeChenBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ansible基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-03-18T15:12:54+08:00">
+                2022-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/ansible-base/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/ansible-base/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读数 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <span id="more"></span>
+
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>主机列表</p>
+<table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>IP地址</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>control</td>
+<td>192.168.4.253</td>
+<td>控制节点（manager）</td>
+</tr>
+<tr>
+<td>Node1</td>
+<td>192.168.4.1</td>
+<td>被控制节点（test）</td>
+</tr>
+<tr>
+<td>Node2</td>
+<td>192.168.4.2</td>
+<td>被控制节点（proxy）</td>
+</tr>
+<tr>
+<td>Node3</td>
+<td>192.168.4.3</td>
+<td>被控制节点（web1）</td>
+</tr>
+<tr>
+<td>Node4</td>
+<td>192.168.4.4</td>
+<td>被控制节点（web2）</td>
+</tr>
+<tr>
+<td>Node5</td>
+<td>192.168.4.5</td>
+<td>被控制节点（database）</td>
+</tr>
+</tbody></table>
+<p>1 修改控制主机的/etc/hosts文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ~]# cat /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">192.168.31.162 control</span><br><span class="line">192.168.31.26  node1</span><br><span class="line">192.168.31.208 node2</span><br><span class="line">192.168.31.248 node3</span><br><span class="line">192.168.31.217 node4</span><br><span class="line">192.168.31.165 node5</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 这样就可以直接ping node1</span></span><br></pre></td></tr></table></figure>
+
+<p>2 修改控制主机的/etc/hosts、配置SSH密钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ~]# ssh-keygen -f /root/.ssh/id_rsa -N &#x27;&#x27;</span><br><span class="line">[root@MiWiFi-R1CL-srv ~]# for i in node1 node3  # 只开启了两台节点</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="keyword">do</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">     ssh-copy-id <span class="variable">$i</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="keyword">done</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此后，就可以直接ssh node1连接其他节点，无密码连接</span></span><br></pre></td></tr></table></figure>
+
+<p>3 控制端安装ansible</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install ansible</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4 被控制端节点操作</p>
+<ul>
+<li>ansible默认通过ssh协议管理机器</li>
+<li>被管理主机要开启ssh服务，并允许控制主机登录</li>
+<li>被管理主机需要安装有python</li>
+</ul>
+<p>5 修改配置文件</p>
+<ul>
+<li><p>主配置文件ansible.cfg（/etc/ansible/ansible.cfg）</p>
+</li>
+<li><p>ansible配置文件查找顺序</p>
+<ul>
+<li>首先检测ANSIBLE_CONFIG变量定义的配置文件</li>
+<li>首次检查当前目录的./absible.cfg文件</li>
+<li>再次检查当前用户家目录下~/ansible.cfg文件</li>
+<li>最后检查/etc/ansible/ansible.cfg文件</li>
+</ul>
+</li>
+<li><p>建议，在用户家目录创建配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ~]# mkdir ~/ansible</span><br><span class="line">[root@MiWiFi-R1CL-srv ~]# vim ~/ansible/ansible.cfg</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# cat ansible.cfg </span><br><span class="line">[defaults]</span><br><span class="line">inventory = ~/ansible/hosts</span><br></pre></td></tr></table></figure></li>
+<li><p>将被管理端主机写入一个主机列表文件（主机清单）</p>
+<p>参考/etc/ansible/hosts</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# vim ~/ansible/hosts</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# cat ~/ansible/hosts</span><br><span class="line">[test]</span><br><span class="line">node1</span><br><span class="line">[proxy]</span><br><span class="line">node2</span><br><span class="line">[webserver]</span><br><span class="line">node3</span><br><span class="line">node4</span><br><span class="line">[database]</span><br><span class="line">node5</span><br><span class="line">[cluster:children]</span><br><span class="line">webserver</span><br><span class="line">database</span><br></pre></td></tr></table></figure></li>
+<li><p>测试ansible环境与配置是否正常</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible all --list-hosts</span><br><span class="line">  hosts (5):</span><br><span class="line">    node2</span><br><span class="line">    node1</span><br><span class="line">    node3</span><br><span class="line">    node4</span><br><span class="line">    node5</span><br><span class="line">    </span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible node1 -m ping</span><br><span class="line">node1 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span><br><span class="line">    &#125;, </span><br><span class="line">    &quot;changed&quot;: false, </span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible node1,node2,node3 -m ping</span><br><span class="line">node3 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span><br><span class="line">    &#125;, </span><br><span class="line">    &quot;changed&quot;: false, </span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">node1 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span><br><span class="line">    &#125;, </span><br><span class="line">    &quot;changed&quot;: false, </span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">node2 | UNREACHABLE! =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false, </span><br><span class="line">    &quot;msg&quot;: &quot;Failed to connect to the host via ssh: ssh: connect to host node2 port 22: No route to host&quot;, </span><br><span class="line">    &quot;unreachable&quot;: true</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible webserver -m ping</span><br><span class="line">node4 | UNREACHABLE! =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false, </span><br><span class="line">    &quot;msg&quot;: &quot;Failed to connect to the host via ssh: ssh: Could not resolve hostname node4: Name or service not known&quot;, </span><br><span class="line">    &quot;unreachable&quot;: true</span><br><span class="line">&#125;</span><br><span class="line">node3 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span><br><span class="line">    &#125;, </span><br><span class="line">    &quot;changed&quot;: false, </span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="ansible-ad-hoc"><a href="#ansible-ad-hoc" class="headerlink" title="ansible ad-hoc"></a>ansible ad-hoc</h1><p>Ansible ad-hoc是一种通过命令行批量管理的方式</p>
+<ul>
+<li>格式: ansible 主机集合-m模块名-a “参数”</li>
+<li>其他参数: <ul>
+<li>-k 使用密码远程</li>
+<li>-i 指定主机列表文件</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>模块就是脚本（多数为python脚本）<ul>
+<li>多数脚本都支持参数</li>
+<li>默认模块为command</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible node1 -m command -a &#x27;uptime&#x27;</span><br><span class="line">node1 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"> 15:49:13 up 25 min,  2 users,  load average: 0.01, 0.03, 0.05</span><br><span class="line"> </span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible node1 -m command -a &#x27;uname -r&#x27;</span><br><span class="line">node1 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">3.10.0-1160.59.1.el7.x86_64</span><br><span class="line"></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible node1 -a &#x27;ip a s&#x27;</span><br><span class="line">node1 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:1b:77:65 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.31.26/24 brd 192.168.31.255 scope global noprefixroute dynamic ens33</span><br><span class="line">       valid_lft 41663sec preferred_lft 41663sec</span><br><span class="line">    inet6 fe80::5e91:f1e8:6f7a:b159/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">3: virbr0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default qlen 1000</span><br><span class="line">    link/ether 52:54:00:1f:76:c2 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">4: virbr0-nic: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000</span><br><span class="line">    link/ether 52:54:00:1f:76:c2 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    </span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -a &#x27;date&#x27;</span><br><span class="line">node1 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">2022年 03月 19日 星期六 15:50:20 CST</span><br><span class="line"></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible node1 -m command -a &#x27;uptime&#x27;</span><br><span class="line">node1 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"> 15:52:17 up 28 min,  2 users,  load average: 0.00, 0.01, 0.05</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><blockquote>
+<p>// 列出所有模块</p>
+<p>ansible-doc -l</p>
+<p>// 过滤模块</p>
+<p>ansible-doc -l |grep yum</p>
+<p>// 查看模块帮助</p>
+<p>ansible-doc yum </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看安装的模块</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible-doc -l</span><br><span class="line">fortios_router_community_list                                 Configure commun...</span><br><span class="line">azure_rm_devtestlab_info                                      Get Azure DevTes...</span><br><span class="line">ecs_taskdefinition                                            register a task ...</span><br><span class="line">avi_alertscriptconfig                                         Module for setup...</span><br><span class="line">tower_receive                                                 Receive assets f...</span><br><span class="line">netapp_e_iscsi_target                                         NetApp E-Series ...</span><br><span class="line">azure_rm_acs                                                  Manage an Azure ...</span><br><span class="line">fortios_log_syslogd2_filter                                   Filters for remo...</span><br><span class="line">junos_rpc                                                     Runs an arbitrar...</span><br><span class="line">na_elementsw_vlan                                             NetApp Element S...</span><br><span class="line">pn_ospf                                                       CLI command to a...</span><br><span class="line">pn_snmp_vacm                                                  CLI command to c...</span><br><span class="line">cp_mgmt_service_sctp                                          Manages service-...</span><br><span class="line">onyx_ospf                                                     Manage OSPF prot...</span><br><span class="line">icx_command                                                   Run arbitrary co...</span><br><span class="line">cs_snapshot_policy                                            Manages volume s...</span><br><span class="line">nxos_install_os                                               Set boot options...</span><br><span class="line">cnos_static_route                                             Manage static IP...</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看总共的模块数</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible-doc -l | wc -l</span><br><span class="line">3387</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="shell模块"><a href="#shell模块" class="headerlink" title="shell模块"></a>shell模块</h2><blockquote>
+<p><strong>command和shell模块的区别</strong></p>
+<ul>
+<li>command模块的命令不启动shell,直接通过ssh执行命令</li>
+<li>command不支持bash的特性，如管道和重定向等功能</li>
+<li>所有需要调用shell的功能都无法使用</li>
+</ul>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 往<span class="built_in">test</span>主机中添加文件</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m shell -a &quot;touch /tmp/123.txt&quot;</span><br><span class="line">[WARNING]: Consider using the file module with state=touch rather than running</span><br><span class="line">&#x27;touch&#x27;.  If you need to use command because file is insufficient you can add</span><br><span class="line">&#x27;warn: false&#x27; to this command task or set &#x27;command_warnings=False&#x27; in ansible.cfg</span><br><span class="line">to get rid of this message.</span><br><span class="line">node1 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看<span class="built_in">test</span>主机的连接情况</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m shell -a &quot;who&quot;</span><br><span class="line">node1 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">root     pts/0        2022-03-19 15:25 (192.168.31.33)</span><br><span class="line">root     pts/1        2022-03-19 16:07 (control)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>ansible使用ssh远程连接被管理主机</p>
+<p>退出ssh后所有状态失效</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换目录</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansibel test -m shell -a &quot;cd/tmp&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建文件（注意：没有指定路径，是在家目录创建的文件）</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m shell -a &quot;touch my.txt&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看文件失败</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m shell -a &quot;ls /tmp/my.txt&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用<span class="built_in">chdir</span>参数切换工作目录</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m shell -a &quot;chdir=/tmp touch my.txt&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>shell模块支持判断（creates、removes）<ul>
+<li>creates文件名：文件存在，不执行shell命令</li>
+<li>removes文件名：文件不存在，不执行shell命令</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 如果<span class="built_in">test</span>主机存在密钥就不执行，不存在就生成密钥</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m shell -a &quot;ssh-keygen -f ~/.ssh/id_rsa -N &#x27;&#x27; creates=~/.ssh/id_rsa&quot;</span><br><span class="line">node1 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">skipped, since /root/.ssh/id_rsa exists</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果没有按照unzip软件包，则不执行解压命令</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible node1,node2 -m shell -a &quot;unzip /root/test.zip removes=/bin/unzip&quot;</span><br><span class="line">[WARNING]: Consider using the unarchive module rather than running &#x27;unzip&#x27;.  If</span><br><span class="line">you need to use command because unarchive is insufficient you can add &#x27;warn:</span><br><span class="line">false&#x27; to this command task or set &#x27;command_warnings=False&#x27; in ansible.cfg to get</span><br><span class="line">rid of this message.</span><br><span class="line">node2 | FAILED | rc=9 &gt;&gt;</span><br><span class="line">unzip:  cannot find or open /root/test.zip, /root/test.zip.zip or /root/test.zip.ZIP.non-zero return code</span><br><span class="line">node1 | FAILED | rc=9 &gt;&gt;</span><br><span class="line">unzip:  cannot find or open /root/test.zip, /root/test.zip.zip or /root/test.zip.ZIP.non-zero return code</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="script模块"><a href="#script模块" class="headerlink" title="script模块"></a>script模块</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将脚本文件test.sh传入node1主机并执行，这个脚本文件是临时文件，执行完后，node1会删除</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible node1 -m script -a &quot;./test.sh&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="file模块"><a href="#file模块" class="headerlink" title="file模块"></a>file模块</h2><p>file模块可以创建文件，目录，链接；修改权限与属性等</p>
+<p>幂等性：任意次执行所产生的影响均与一次执行的影响相同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">新建文件state=touch</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m file -a &quot;path=/tmp/file.txt state=touch&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">创建目录state=directory</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m file -a &quot;path=/tmp/mydir state=directory&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">修改文件或目录权限</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m file l -a &quot;path=/tmp/file.txt owner=sshd group=adm mode=0777&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="copy模块"><a href="#copy模块" class="headerlink" title="copy模块"></a>copy模块</h2><p>将文件拷贝到远程主机</p>
+<p>backup=yes如果目标主机有同名文件，则先备份</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">新建测试文件</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# echo AAA &gt;~la3.txt</span><br><span class="line"></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m copy -a &quot;src=~la3.txt dest=/root/&quot;</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m copy -a &quot;src=~la3.txt dest=/root/3a.txt&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">通过content可以直接提供文件内容, n代表回车</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m copy l -a &quot;content=&#x27;hello the world\n&#x27; dest=/root/new.txt&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="fetch模块"><a href="#fetch模块" class="headerlink" title="fetch模块"></a>fetch模块</h2><p>与copy类似，但是作用相反</p>
+<p>可以将其他主机的文件拷贝到本地</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程主机的hostname文件下载到本地家目录,dest是本地目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 多台主机fetch时，如果重名后天会自行重命名</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m fetch -a &quot;src=/etc/hostname dest=~/&quot;</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ls ~l</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="lineinfile-replace模块"><a href="#lineinfile-replace模块" class="headerlink" title="lineinfile | replace模块"></a>lineinfile | replace模块</h2><ul>
+<li>在修改单个文件的单行内容时可以使用lineinfile模块</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">在letc/issue文件中添加一行内容hello world，默认添加到最后</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m lineinfile -a &quot;path=/etc/lissue line=&#x27;hello world&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">基于幂等原则，重复执行，不会创建多行内容</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m lineinfile -a &quot;path=/etc/issue line=&#x27;helle world&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">将内容插入到Kernel行的后面</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m lineinfile -a &quot;path=/etc/issue line=&#x27;insert&#x27; insertafter=&#x27;Kernel&#x27;&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>lineinfile会替换一整行，replace可以替换关键词</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">将/etc/issue文件全文所有的Kernel替换为0cean</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m replace l -a &quot;path=/etc/issue.net regexp=Kernel replace=Ocean&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="user模块"><a href="#user模块" class="headerlink" title="user模块"></a>user模块</h2><ul>
+<li>user模块可以实现Linux系统账户管理</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">远程<span class="built_in">test</span>组中的所有主机并创建系统账户tuser1</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m user -a &quot;name=tuser1&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">创建账户并设置对应的账户属性</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m user -a &quot;name=tuser2 uid=1010 group=adm groups=daemon,root home=/home/tuser2&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">修改账户密码，修改密码必须使用password_hash()算法</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m user -a &quot;name=tuser1 password=&#123;&#123;&#x27;abc&#x27;| password_hash(&#x27;sha512&#x27;)&#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="yum-repository模块"><a href="#yum-repository模块" class="headerlink" title="yum_repository模块"></a>yum_repository模块</h2><ul>
+<li>使用yum_repository可以创建或修改yum源配置文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">新建一个yum源配置文件/etclyum.repos.d/myyum.repo</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m yum_repository -a &quot;name=myyum description=hello baseurl=ftp://192.168.31.126/centos gpgcheck=no&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">yum源文件名为myyum，该文件的内容如下:</span></span><br><span class="line">[myyum]</span><br><span class="line">baseurl = ftp://192.168.31.126/centosgpgcheck = 0</span><br><span class="line">name = hello</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">修改yum源文件内容</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m yum_repository -a &quot;name=myyumdescription=test baseurl=ftp://192.168.4.254/centos gpgcheck=yes gpgkey=...&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">删除yum源文件myyum</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m yum_repository -a &quot;name=myyum state=absent&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="yum模块"><a href="#yum模块" class="headerlink" title="yum模块"></a>yum模块</h2><ul>
+<li><p>使用yum模块可以安装、卸载、升级软件包</p>
+<p>state：present（安装）|absent（卸载）|latest（升级）</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">安装unzip软件包</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m yum -a &quot;name=unzip state=present&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">升级unzip软件包，软件名称可以是*，代表升级所有软件包</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m yum -a &quot;name=unzip state=latest&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">卸载unzip软件包</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m yum -a &quot;name=unzip state=absent&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="逻辑卷相关模块"><a href="#逻辑卷相关模块" class="headerlink" title="逻辑卷相关模块"></a>逻辑卷相关模块</h2><ul>
+<li><p>lvg模块：创建、删除卷组（VG），修改卷组大小</p>
+<p>state：present（创建）|absent（删除）</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">安装lvm2软件包</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m yum -a &quot;name=lvm2&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">创建名称为myvg的卷组,该卷组由/dev/sdb1组成</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m lvg -a &quot;vg=myvg pvs=/dev/sdb1&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">修改卷组大小</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m lvg -a &quot;vg=myvg pvs=/dev/sdb1,/devlsdb2&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>lvol模块：创建、删除逻辑卷(LV)，修改逻辑卷大小 </p>
+<p>state：present（创建）|absent（删除）</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">使用myvg这个卷组创建一个名称为mylv的逻辑卷</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m lvol -a &quot;Iv=mylv vg=myvg size=2G&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">修改LV逻辑卷大小</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m Ivol -a &quot;Iv=mylv vg=myvg size=4G&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">删除逻辑卷</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m lvol -a &quot;lv=mylv vg=myvg state=absent force=yes&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">删除卷组myvg</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible test -m lvg -a &quot;vg=myvg state=absent&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="sudo提权"><a href="#sudo提权" class="headerlink" title="sudo提权"></a>sudo提权</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>sudo（以超级管理员或其他的身份执行命令）</li>
+<li>基本流程<ul>
+<li>管理员需要先授权（修改/etc/sudoers文件）</li>
+<li>普通用户已sudo的形式执行命令</li>
+<li>可以通过sudo -l查看授权情况</li>
+</ul>
+</li>
+</ul>
+<h2 id="sudoers语法"><a href="#sudoers语法" class="headerlink" title="sudoers语法"></a>sudoers语法</h2><ul>
+<li>修改/etc/sudoers的方法<ul>
+<li>visudo（带语法检查，默认没有颜色提示）</li>
+<li>vim /etc/sudoers（不带语法检查，默认有颜色提示）</li>
+</ul>
+</li>
+<li>授权格式如下：<ul>
+<li>用户或组 主机列表=（提权身份） [NOPASSWD]：命令列表</li>
+<li>命令需要些绝对路径</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# cat /etc/sudoers</span><br><span class="line">root ALL=(ALL) ALL</span><br><span class="line"><span class="meta">%</span><span class="bash">wheel ALL=(ALL) ALL</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>测试（在node1中）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在node1创建一个新用户jerry</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ~]# useradd jerry</span><br><span class="line">[root@MiWiFi-R1CL-srv ~]# passwd jerry</span><br><span class="line">更改用户 jerry 的密码 。</span><br><span class="line">新的 密码：</span><br><span class="line">无效的密码： 密码少于 8 个字符</span><br><span class="line">重新输入新的 密码：</span><br><span class="line">passwd：所有的身份验证令牌已经成功更新。</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时很多服务命令jerry用户无法使用，需要root授权</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改配置文件，使用visudo，和vim  /etc/sudoers都可以</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时就可以使用sudo systemctl方式使用这个命令</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/ansible-base/Learning/PersonalBlog\CodeChenBlog\source_posts\ansible-base\Snipaste_2022-03-20_15-09-10.jpg"></p>
+<ul>
+<li>在所有被管理主机配置sudo，让alice可以管理系统服务<ul>
+<li>默认普通用户无权执行systemctl命令</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible all -m lineinfile -a &quot;path=/etc/sudoers line=&#x27;alice ALL=(ALL)/usr/bin/systemctl&#x27;&quot;</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ssh alice@node1   # 密码123456</span><br><span class="line">[alice@proxy ~]$ sudo -l</span><br><span class="line">[alice@proxy ~]$ sudo systemctl restart chronyd   #验证</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在所有被管理主机配置sudo，让alice可以执行任何命令<ul>
+<li>使用NOPASSWD开启无密码验证</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible all -m lineinfile -a &quot;path=/etc/sudoers line=&#x27;aliceALL=(ALL) NOPASSWD:ALL&quot;</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ssh alice@node1</span><br><span class="line">[alice@proxy ~]$ sudo -l</span><br><span class="line">[alice@proxy ~]$ sudo systemctl restart chronyd		#不需要输入密码</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="高级配置"><a href="#高级配置" class="headerlink" title="高级配置"></a>高级配置</h1><ul>
+<li>修改~/ansible/ansible.cfg<ul>
+<li>修改sudo相关配置（参考/etc/ansible/ansible.cfg）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# vim ~/ansible/ansible.cfg</span><br><span class="line">[defaults]</span><br><span class="line">inventory = ~/ansible/hosts</span><br><span class="line">remote_user = alice   #以什么用户远程被管理主机</span><br><span class="line"><span class="meta">#</span><span class="bash">host_key_checking = False   <span class="comment">#是否校验密钥</span></span></span><br><span class="line"></span><br><span class="line">[privilege_escalation]</span><br><span class="line">become = True   #是否需要切换用户</span><br><span class="line">become_method = sudo   #如何切换用户</span><br><span class="line">become_user = root   #切换成什么用户</span><br><span class="line">become_ask_pass = False   #sudo是否需要输入密码</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>使用alice远程被管理主机，需要提前配置SSH密钥</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@control ~]# for i in node1 node2 node3 node4 node5</span><br><span class="line">do</span><br><span class="line">ssh-copy-id alice@$i</span><br><span class="line">done</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">[root@control~]#</span><span class="bash"> ansible all -m <span class="built_in">command</span> -a <span class="string">&quot;who&quot;</span>   <span class="comment">#测试效果</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>inventory配置</p>
+<p>修改主机清单文件，添加变量（多个变量空格分割）</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[root@control~]#</span><span class="bash"> cat ~lansible/hosts</span></span><br><span class="line">[test]</span><br><span class="line">node1 ansible_ssh_port=220 #自定义远程SSH端口</span><br><span class="line">[proxy]</span><br><span class="line">node2 ansible_ssh_user=alice #自定义远程连接的账户名</span><br><span class="line">[webserver]</span><br><span class="line">node[3:4] ansible_ssh_pass=密码 #自定义远程连接的密码</span><br><span class="line">[database]</span><br><span class="line">node5 ansible_ssh_private_key_file=密钥文件 #自定义远程连接的密钥</span><br><span class="line">[cluster:children]</span><br><span class="line">webserver</span><br><span class="line">database</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="playbook"><a href="#playbook" class="headerlink" title="playbook"></a>playbook</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li><p>Ansible ad-hoc可以通过命令行形式远程管理其他主机</p>
+<ul>
+<li>适合执行一些临时性简单任务</li>
+</ul>
+</li>
+<li><p>Ansible playbook中文名称叫剧本</p>
+<ul>
+<li>将经常需要执行的任务写入一个文件(剧本)</li>
+<li>剧本中可以包含多个任务</li>
+<li>剧本写后，我们随时调用剧本，执行相关的任务命令</li>
+<li>playbook剧本要求按照YAML格式编写</li>
+<li>适合执行周期性经常执行的复杂任务</li>
+</ul>
+</li>
+</ul>
+<h2 id="YAML格式"><a href="#YAML格式" class="headerlink" title="YAML格式"></a>YAML格式</h2><ul>
+<li><p>“#”代表注释,一般第一行为三个横杠</p>
+</li>
+<li><p>键值对使用“∵”表示，数组使用”-“表示</p>
+</li>
+<li><p>缩进必须由两个或以上空格组成</p>
+</li>
+<li><p>相同层级的缩进必须对齐</p>
+</li>
+<li><p>全文不可以使用tab键</p>
+</li>
+<li><p>区分大小写、扩展名为yml或者yaml</p>
+</li>
+<li><p>跨行数据需要使用&gt;或者|(|会保留换行符)</p>
+</li>
+<li><p>YAML格式的键值对数据</p>
+<ul>
+<li>key和value之间使用“：”分割</li>
+<li>“：”后面必须有空格</li>
+<li>缩进代表层级关系</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 例子</span><br><span class="line">&quot;诗仙&quot;: &quot;李白&quot;</span><br><span class="line">或者</span><br><span class="line">&quot;诗仙&quot;: </span><br><span class="line">	&quot;李白&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>YAML格式的数组数据</p>
+<p>使用短横杠和空格表示，一行表示数据格式[值，值，值……]</p>
+</li>
+</ul>
+<p><img src="/ansible-base/Learning/PersonalBlog\CodeChenBlog\source_posts\ansible-base\Snipaste_2022-03-20_16-26-00.jpg"></p>
+<p>综合示例</p>
+<p><img src="/ansible-base/Learning/PersonalBlog\CodeChenBlog\source_posts\ansible-base\Snipaste_2022-03-20_16-26-33.jpg"></p>
+<p><img src="/ansible-base/Learning/PersonalBlog\CodeChenBlog\source_posts\ansible-base\Snipaste_2022-03-20_16-27-47.jpg"></p>
+<p><strong>|会保留换行符</strong></p>
+<p><img src="/ansible-base/Learning/PersonalBlog\CodeChenBlog\source_posts\ansible-base\Snipaste_2022-03-20_16-29-08.jpg"></p>
+<p><strong>-和：后面必须有空格</strong></p>
+<p><img src="/ansible-base/Learning/PersonalBlog\CodeChenBlog\source_posts\ansible-base\Snipaste_2022-03-20_16-30-00.jpg"></p>
+<h2 id="playbook语法格式"><a href="#playbook语法格式" class="headerlink" title="playbook语法格式"></a>playbook语法格式</h2><ul>
+<li><p>playbook采用YAML格式编写</p>
+</li>
+<li><p>playbook文件中由一个或多个play组成</p>
+</li>
+<li><p>每个play中可以包含:</p>
+<ul>
+<li><p>hosts(主机)、tasks(任务)</p>
+</li>
+<li><p>variables(变量)、roles(角色)、handlers等元素组成</p>
+</li>
+</ul>
+</li>
+<li><p>使用ansible-playbook命令运行playbook剧本</p>
+</li>
+</ul>
+<p><strong>测试第一个playbook</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# vim ~/ansible/test.yml</span><br><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">	- name: This is my first playbook</span><br><span class="line">	ping:</span><br><span class="line">	</span><br><span class="line">[root@control ansible]# ansible-playbook ~/ansible/test.yml</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ul>
+<li><p>hosts由一个或多个组或主机组成，逗号分隔</p>
+</li>
+<li><p>tasks由一个或多个任务组成，多个任务按顺序执行</p>
+</li>
+<li><p>可以使用-f选项自定义并发量</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# vim ~/ansible/test.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test,webserver</span><br><span class="line">tasks:</span><br><span class="line">	- name: This is my first playbook</span><br><span class="line">	  ping:</span><br><span class="line">	- name: Run a shell command</span><br><span class="line">	  shell: touch ~/shell.txt</span><br><span class="line">[root@control ansible]# ansible-playbook ~lansible/test.yml -f 5</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>一个playbook中可以有多个play</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# vim ~/ansible/test.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: This is first play</span><br><span class="line">	  ping:</span><br><span class="line">- hosts: webserver</span><br><span class="line">  tasks:</span><br><span class="line">	- name: This is second play</span><br><span class="line">	  ping:</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>修改VIM配置</strong></p>
+<ul>
+<li><p>使用2个空格自动替换tab键</p>
+<p>tabstop=2、expandtab</p>
+</li>
+<li><p>开启自动缩进对其，缩进宽度为2个空格</p>
+<p>shiftwidth=2</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/.vimrc</span><br><span class="line">autocmd FileType yaml setlocal ai ts=2 sw=2 et</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="playbook应用案例之用户"><a href="#playbook应用案例之用户" class="headerlink" title="playbook应用案例之用户"></a>playbook应用案例之用户</h2><ul>
+<li>编写playbook创建系统账户、账户属性、设置密码</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/test_john.yml</span><br><span class="line">---</span><br><span class="line">- hosts: webserver</span><br><span class="line">  tasks:</span><br><span class="line">- name: Add the user &#x27;johnd&#x27;</span><br><span class="line">  user:</span><br><span class="line">	name: johnd</span><br><span class="line">	uid: 1040</span><br><span class="line">	group: daemon</span><br><span class="line">	password: &quot;&#123;&#123; &#x27;123&#x27; | password_hash(&#x27;sha512&#x27;) &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>花括号外面必须有双引号</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/user_james.yml</span><br><span class="line">---</span><br><span class="line">- hosts: webserver</span><br><span class="line">  tasks:</span><br><span class="line">	- name: Add &#x27;james&#x27; with a bash shell, set &#x27;bin&#x27; and &#x27;adm&#x27; to the user&#x27;s groups</span><br><span class="line">      user:</span><br><span class="line">		name: james</span><br><span class="line">		shell: /bin/bash</span><br><span class="line">		groups: bin,adm</span><br><span class="line">		password: &quot;&#123;&#123; &#x27;123&#x27;| password_hash(&#x27;sha512&#x27;) &#125;&#125;”</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编写playbook删除系统账户johnd</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/user_johnd.yml</span><br><span class="line">---</span><br><span class="line">- hosts: webserver</span><br><span class="line">  tasks:</span><br><span class="line">	- name: Remove the user &#x27;johnd&#x27;</span><br><span class="line">	  user:</span><br><span class="line">		name: johnd</span><br><span class="line">		state: absent</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用vdb创建卷组合逻辑卷（手动添加虚拟磁盘）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/lvm.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: Create a new primary partition with a size of 1GiB</span><br><span class="line">	  parted:</span><br><span class="line">		device: /dev/sdb</span><br><span class="line">		number: 1</span><br><span class="line">		state: present</span><br><span class="line">		part_end: 1GiB</span><br><span class="line">	- name: Create a new primary partition with a size of 2GiB</span><br><span class="line">	  parted:</span><br><span class="line">		device: /dev/sdbnumber: 2</span><br><span class="line">		state: present</span><br><span class="line">		part_start: 1GiB</span><br><span class="line">		part_end: 3GiB</span><br><span class="line">	- name: Create a volume group on top of /dev/sdb1</span><br><span class="line">	  lvg:</span><br><span class="line">		vg: my_vg</span><br><span class="line">		pvs: /dev/sdb1</span><br><span class="line">	- name: Create a logical volume of 512m</span><br><span class="line">	  lvol:</span><br><span class="line">		vg: my_vg</span><br><span class="line">		lv: my_lv</span><br><span class="line">		size: 512m</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="playbook应用案例之软件管理"><a href="#playbook应用案例之软件管理" class="headerlink" title="playbook应用案例之软件管理"></a>playbook应用案例之软件管理</h2><ul>
+<li>安装软件、升级软件、安装组包</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/pacakge.yml</span><br><span class="line">---</span><br><span class="line">- hosts: webserver</span><br><span class="line">  tasks:</span><br><span class="line">	- name: Install a list of packages</span><br><span class="line">	  yum:</span><br><span class="line">		name:</span><br><span class="line">		  - httpd</span><br><span class="line">		  - mariadb</span><br><span class="line">		  - mariadb-server</span><br><span class="line">	- name: install the &#x27;Development tools&#x27; package group</span><br><span class="line">	  yum:</span><br><span class="line">		name: &quot;@Development tools&quot;</span><br><span class="line">	- name: update software</span><br><span class="line">	  yum:</span><br><span class="line">		name: &#x27;*&#x27;</span><br><span class="line">		state: latest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="setup模块"><a href="#setup模块" class="headerlink" title="setup模块"></a>setup模块</h2><ul>
+<li><p>ansible_facts用于采集被管理设备的系统信息</p>
+</li>
+<li><p>所有收集的信息都被保存在变量中</p>
+</li>
+<li><p>每次执行playbook默认第一个任务就是Gathering Facts</p>
+</li>
+<li><p>使用setup模块可以查看收集到的facts信息</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# ansible test -m setup</span><br><span class="line">192.168.4.10 |SUCCESS =&gt; &#123;</span><br><span class="line">  &quot;ansible_facts&quot;: &#123;</span><br><span class="line">	&quot;ansible_all_ipv4_addresses&quot;: [</span><br><span class="line">	  &quot;192.168.4.10&quot;</span><br><span class="line">…省略部分内容…</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="debug模块"><a href="#debug模块" class="headerlink" title="debug模块"></a>debug模块</h2><ul>
+<li>debug模块可以显示变量的值，可以辅助排除<ul>
+<li>debug模块有两个参数，var和msg（引用变量需要两个大括号括起来）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/debug.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- debug:</span><br><span class="line">		var: ansible all_ipv4_addresses</span><br><span class="line">	- debug:</span><br><span class="line">		msg: &quot;主机名是:&#123;&#123; iansible_hostname &#125;&#125;&quot;</span><br><span class="line">	- debug:</span><br><span class="line">		var: ansible devices.vda.partitions.vda1.size</span><br><span class="line">	- debug:</span><br><span class="line">		msg: &quot;总内存大小:&#123;&#123; ansible_memtotal_mb &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h1><ul>
+<li>ansible支持十几种定义变量的方式</li>
+<li>这里我们仅介绍其中一部分变量，根据优先级排序<ul>
+<li>inventory变量</li>
+<li>host facts变量</li>
+<li>register变量</li>
+<li>playbook变量</li>
+<li>playbook提示变量</li>
+<li>变量文件</li>
+<li>命令行变量</li>
+</ul>
+</li>
+</ul>
+<h2 id="应用案例"><a href="#应用案例" class="headerlink" title="应用案例"></a>应用案例</h2><ul>
+<li>inventory变量（在主机清单配置文件中定义变量）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/hosts</span><br><span class="line">[test]</span><br><span class="line">node1 myvar1=&quot;hello the world&quot; myvar2=&quot;content&quot;</span><br><span class="line">[proxy]</span><br><span class="line">node2</span><br><span class="line">[webserver]</span><br><span class="line">node[3:4]</span><br><span class="line">[webserver:vars]</span><br><span class="line">yourname=&quot;jacob&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/linventory_var.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: create a file with var.</span><br><span class="line">	  shell: echo i&#123; myvar1 &gt; /tmp/&#123;&#123;myvar2&#125;&#125;</span><br><span class="line">- hosts: webserver</span><br><span class="line">  tasks:</span><br><span class="line">	- name: create a user with var.</span><br><span class="line">	  user:</span><br><span class="line">	    name: &quot;&#123;&#123; yourname &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>host facts变量（可以直接调用ansible手机的系统信息）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/facts_var.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: Use facts info.</span><br><span class="line">	  copy:</span><br><span class="line">		content: &quot;&#123;&#123;ansible_hostname&#125;&#125;:&#123;&#123;ansible_bios_version&#125;&#125;&quot;</span><br><span class="line">		dest: /tmp/facts.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>register语句可以将某个命令的执行结果保存到变量中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/register.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: save shell result to a variable.</span><br><span class="line">	  shell: hostname</span><br><span class="line">	  register: myvar</span><br><span class="line">	- name: print the variable&#x27;s value through debug</span><br><span class="line">	  debug:</span><br><span class="line">		msg: &quot;&#123;&#123; myvar &#125;&#125;&quot;</span><br><span class="line">		</span><br><span class="line"># 通过&quot;.&quot;我们还可以仅提取部分数据</span><br><span class="line">		msg: &quot;&#123;&#123;myvar.stdout&#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>playbook变量（使用vars关键词可以在playbook内定义变量）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/playbook_var.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  vars:</span><br><span class="line">	iname: heal</span><br><span class="line">	ipass: &#x27;123456&#x27;   # 注意密码必须是字符串,需安引号</span><br><span class="line">tasks:</span><br><span class="line">  - name: Use variables create user.</span><br><span class="line">    user:</span><br><span class="line">	  name: &quot;&#123;&#123; iname &#125;&#125;&quot;</span><br><span class="line">	  password: &quot;&#123;&#123; ipass | password_hash(&#x27;sha512&#x27;) &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>playbook提示变量（根据提示输入变量的值）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/prompt_var.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  vars_prompt:</span><br><span class="line">	- name: iname</span><br><span class="line">	  prompt:&quot;请输入用户名&quot;</span><br><span class="line">	  private: no   #回显用户名</span><br><span class="line">	- name: ipasswd</span><br><span class="line">	  prompt: &quot;请输入密码&quot;</span><br><span class="line">	  private: yes   #不显示密码</span><br><span class="line">  tasks:</span><br><span class="line">	- name: Create a user.</span><br><span class="line">	  user:</span><br><span class="line">	    name: &quot;&#123;&#123; iname &#125;&#125;&quot;</span><br><span class="line">		password: &quot;&#123;&#123; ipasswd | password_hash(&#x27;sha512&#x27;)&#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>单独定义个变了文件，在playbook中用var_files调用该文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/variables.yml</span><br><span class="line">---</span><br><span class="line">iname: cloud</span><br><span class="line">ipass: &#x27;123456&#x27;</span><br><span class="line"></span><br><span class="line">[root@control ansible]# cat ~lansible/file_var.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  vars_files: variables.yml</span><br><span class="line">  tasks:</span><br><span class="line">	- name: create user.</span><br><span class="line">	user:</span><br><span class="line">	  name: &quot;f&#123;i iname &#125;&#125;”</span><br><span class="line">	  password: &quot;&#123;&#123; ipass | password_hash(&#x27;sha512&#x27;)&#125;&#125;”</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>执行ansible-playbook命令时使用-e参数定义变量</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/command_var.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: create user</span><br><span class="line">	  user:</span><br><span class="line">		name: &quot;&#123;&#123; iname &#125;&#125;&quot;</span><br><span class="line">		password: &quot;&#123;&#123; ipass | password_hash(&#x27;sha512&#x27;)&#125;&#125;&quot;</span><br><span class="line">		</span><br><span class="line">[root@control ansible]# ansible-playbook command_var.yml -e iname=&quot;beth&quot; -e ipass=&quot;123456&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="ansible模块应用"><a href="#ansible模块应用" class="headerlink" title="ansible模块应用"></a>ansible模块应用</h1><h2 id="firewalld模块"><a href="#firewalld模块" class="headerlink" title="firewalld模块"></a>firewalld模块</h2><ul>
+<li>使用firewalld模块可以配置防火墙策略</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@control ~]#cat ~/ansible/firewall.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: install firewalld.</span><br><span class="line">	  yum:</span><br><span class="line">		name: firewalld</span><br><span class="line">		state: present</span><br><span class="line">	- name: run firewalld.</span><br><span class="line">	  service:</span><br><span class="line">		name: firewalld</span><br><span class="line">		state: started</span><br><span class="line">		enabled: yes</span><br><span class="line">	- name: set firewalld rule.</span><br><span class="line">	  firewalld:</span><br><span class="line">		port:80/tcp</span><br><span class="line">		permanent: yes</span><br><span class="line">		state: enabled</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="template模块"><a href="#template模块" class="headerlink" title="template模块"></a>template模块</h2><ul>
+<li><p>copy模块可以将一个文件拷贝给远程主机</p>
+</li>
+<li><p>但是如果希望每个拷贝的文件内容都不一样呢?</p>
+</li>
+<li><p>如何给所有web主机拷贝index.html内容是各自的IP地址?</p>
+</li>
+<li><p>Ansible可以利用Jinja2模板引擎读取变量</p>
+<ul>
+<li><p>之前在playbook中调用变量，也是Jinja2的功能</p>
+</li>
+<li><p>Jinja2模块的表达式包含在分隔符<code>&#123;&#123; &#125;&#125;</code>内</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>案例：</p>
+<ul>
+<li>给webserver主机拷贝首页，每个主机内容不同</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# mkdir ~/ansible/template</span><br><span class="line">[root@control ansible]# cat ~/ansible/template/index.html</span><br><span class="line">Welcom to &#123;&#123;ansible_hostname&#125;&#125; on &#123;&#123; ansible_eth0.ipv4.address &#125;&#125;.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">模板文件中调用变量不需要双引号</span></span><br><span class="line">[root@control ansible]# cat ~/ansible/template.yml</span><br><span class="line">---</span><br><span class="line">- hosts: webserver</span><br><span class="line">  tasks:</span><br><span class="line">	- name: use template copy index.html to webserver.</span><br><span class="line">	  template:</span><br><span class="line">		src: ~/ansible/templatelindex.html</span><br><span class="line">		dest: /var/www/html/index.html</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/template/source.j2</span><br><span class="line">&#123;&#123; welcome &#125;&#125; &#123;&#123; iname &#125;&#125; ...</span><br><span class="line">[root@control ansible]# cat ~/ansible/template_2.yml</span><br><span class="line">---</span><br><span class="line">- hosts: webserver</span><br><span class="line">  vars:</span><br><span class="line">	welcome: &#x27;hello&#x27;</span><br><span class="line">	iname: &#x27;jack&#x27;</span><br><span class="line">  tasks:</span><br><span class="line">	- name: use template copy a file to remote host.</span><br><span class="line">	  template:</span><br><span class="line">		src: ~lansible/templatelsource.j2</span><br><span class="line">		dest: /tmpl</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="ansible高级语法"><a href="#ansible高级语法" class="headerlink" title="ansible高级语法"></a>ansible高级语法</h1><h2 id="error处理机制"><a href="#error处理机制" class="headerlink" title="error处理机制"></a>error处理机制</h2><ul>
+<li>默认ansible在遇到error会立即停止playbook</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/error.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: start a service that does not exist.</span><br><span class="line">	  service:</span><br><span class="line">		name: hehe   #没有这个服务</span><br><span class="line">		state: started</span><br><span class="line">	- name: touch a file.</span><br><span class="line">	  file:</span><br><span class="line">		path: /tmplservice.txt</span><br><span class="line">		state: touch</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用ignore_errors可以忽略错误，继续后续的任务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/error.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: start a service that does not exist.</span><br><span class="line">	  service:</span><br><span class="line">		name: hehe</span><br><span class="line">		state: started</span><br><span class="line">	  ignore_errors: true   # 针对某一个任务忽略错误</span><br><span class="line">	- name: touch a file.</span><br><span class="line"> 	  file:</span><br><span class="line">		path: /tmp/service.txt</span><br><span class="line">		state: touch</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="handlers"><a href="#handlers" class="headerlink" title="handlers"></a>handlers</h2><ul>
+<li>当某个任务需要依赖其他任务怎么办？<ul>
+<li>可以通过handlers定义一组任务</li>
+<li>仅当某个任务触发（notify）handlers时才执行相应的任务</li>
+<li>如果有多个notify触发执行handlers任务，也仅执行一次</li>
+<li>仅当任务的执行状态为changed时handlers任务才执行</li>
+<li>handlers任务在所有其他任务都执行后才执行</li>
+</ul>
+</li>
+</ul>
+<p>案例：</p>
+<ul>
+<li>通过notify触发执行handlers任务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/handlers.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: create directory.   # 多次执行playbook该任务状态不再是changed</span><br><span class="line">	  file:</span><br><span class="line">		path: /tmp/parents/subdir/</span><br><span class="line">		state: directory</span><br><span class="line">	  notify: touch file   # notify后面名称必须和handlers中的任务名称一致</span><br><span class="line">  handlers:</span><br><span class="line">	- name: touch file</span><br><span class="line">	  file:</span><br><span class="line">		path: /tmp/parents/subdir/new.txt</span><br><span class="line">		state: touch</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="when条件判断"><a href="#when条件判断" class="headerlink" title="when条件判断"></a>when条件判断</h2><ul>
+<li><p>when可以定义判断条件，条件为真时才执行某个任务</p>
+</li>
+<li><p>常见条件操作符如下:</p>
+<ul>
+<li>==、!=、&gt;、&gt;=、&lt;、&lt;=</li>
+</ul>
+</li>
+<li><p>多个条件可以使用and或or分割</p>
+</li>
+<li><p>when表达式中调用变量不要使用<code>&#123;&#123; &#125;&#125;</code></p>
+</li>
+</ul>
+<p>案例：</p>
+<ul>
+<li>远程主机剩余内存不足700M则关闭NetworkManager服务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/when_1.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: check memory size.</span><br><span class="line">	  service:</span><br><span class="line">		name: NetworkManager</span><br><span class="line">		state: stopped</span><br><span class="line">	  when: ansible_memfree_mb &lt; 700</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>判断操作系统是Centos7则创建测试文件</p>
+<ul>
+<li>&gt;支持多行输入，不保留换行符</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/when_2.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: touch a file</span><br><span class="line">	  file:</span><br><span class="line">		path: /tmp/when.txt</span><br><span class="line">		state: touch</span><br><span class="line">	  when: &gt;</span><br><span class="line">		ansible_distribution == &quot;Centos&quot;</span><br><span class="line">			and</span><br><span class="line">		ansible_distribution_major_version == &quot;7&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="block任务块"><a href="#block任务块" class="headerlink" title="block任务块"></a>block任务块</h2><ul>
+<li>使用block可以将多个任务合并为一个组</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/block_1.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: define a group of tasks.</span><br><span class="line">	  block:</span><br><span class="line">		- name: install httpd</span><br><span class="line">		  yum:</span><br><span class="line">			name: httpd</span><br><span class="line">			state: present</span><br><span class="line">		- name: start httpd</span><br><span class="line">		  service:</span><br><span class="line">			name: httpd</span><br><span class="line">			state: started</span><br><span class="line">	  when: ansible_distribution == &quot;Centos&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>rescue定义block任务执行失败时要执行的其他任务</p>
+</li>
+<li><p>always定义无论block任务是否成功，都要执行的任务</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/block_2.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- block:</span><br><span class="line">		- name: touch a file test1.txt</span><br><span class="line">		  file:</span><br><span class="line">			path: /tmp/test1.txt   #如果改为/tmplxyz/test1.txt就无法创建成功</span><br><span class="line">			state: touch</span><br><span class="line">	  rescue:</span><br><span class="line">		- name: touch a file test2.txt</span><br><span class="line">		  file:</span><br><span class="line">			path: /tmp/test2.txt</span><br><span class="line">			state: touch</span><br><span class="line">	  always:</span><br><span class="line">		- name: touch a file test3.txt</span><br><span class="line">		  file:</span><br><span class="line">			path: /tmp/test3.txt</span><br><span class="line">			state: touich</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="loop循环"><a href="#loop循环" class="headerlink" title="loop循环"></a>loop循环</h2><ul>
+<li>很多任务都在用相同的模块?使用loop循环避免重复</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/simple_loop.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: mkdir multi directory.</span><br><span class="line">	  file:</span><br><span class="line">		path: /tmpl&#123;&#123;item&#125;&#125;   #注意,item是关键字</span><br><span class="line">		state: directory</span><br><span class="line">	  loop:</span><br><span class="line">		- School</span><br><span class="line">		- Legend</span><br><span class="line">		- Life</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/complex_loop.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  tasks:</span><br><span class="line">	- name: create multi user.</span><br><span class="line">	  user:</span><br><span class="line">		name: &quot;&#123;&#123;item.iname&#125;&#125;&quot;</span><br><span class="line">		password: &quot;&#123;&#123;item.ipass | password_hash(&#x27;sha512&#x27;)&#125;&#125;&quot;</span><br><span class="line">	  loop:</span><br><span class="line">		- &#123; iname: &#x27;term&#x27;, ipass: &#x27;123456&#x27;&#125;</span><br><span class="line">		- &#123; iname: &#x27;amy&#x27; , ipass: &#x27;654321&#x27;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="ansible-vault"><a href="#ansible-vault" class="headerlink" title="ansible vault"></a>ansible vault</h1><h2 id="加密文件"><a href="#加密文件" class="headerlink" title="加密文件"></a>加密文件</h2><ul>
+<li>ansible有时需要访问一些敏感数据，如密码、key等</li>
+<li>使用ansible-vault可以加密和 解密数据<ul>
+<li>encrypt（加密）、decrypt（解密）、view（查看）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# echo 123456 &gt; data.txt   #新建测试文件</span><br><span class="line">[root@control ansible]# ansible-vault encrypt data.txt   #加密文件</span><br><span class="line">[root@control ansible]# cat data.txt</span><br><span class="line">[root@control ansible]# ansible-vault view data.txt   #查看加密文件</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ansible-vault rekey可以修改加密的密码</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# ansible-vault encrypt data.txt   #加密文件，密码111</span><br><span class="line">New Vault password: 111</span><br><span class="line">Confirm New Vault password:111</span><br><span class="line">[root@control ansible]# ansible-vault rekey data.txt   #修改密码</span><br><span class="line">Vault password:&lt;旧密码&gt;</span><br><span class="line">New Vault password:&lt;新密码&gt;</span><br><span class="line">Confirm New Vault password:&lt;确认新密码&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>加密、解密每次都输入密码很麻烦，可以将密码写入文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# echo &quot;&#x27;m secret data&quot; &gt; data.txt   #需要加密的敏感数据</span><br><span class="line">[root@control ansible]# echo 123456 &gt; pass.txt   #加密的密码</span><br><span class="line">[root@control ansible]# ansible-vault encrypt --vault-id=pass.txt data.txt</span><br><span class="line">[root@control ansible]# cat data.txt</span><br><span class="line">[root@control ansible]# ansible-vault decrypt --vault-id=pass.txt data.txt</span><br><span class="line">[root@control ansible]# cat data.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>传输敏感数据到远程数据</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# echo &quot;I&#x27;m secret data&quot; &gt; data.txt   #需要加密的敏感数据</span><br><span class="line">[root@control ansible]# echo 123456 &gt; pass.txt   #加密的密码</span><br><span class="line">[root@control ansible]# ansible-vault encrypt --vault-id=pass.txt data.txt</span><br><span class="line">[root@control ansible]# ansible test -m copy --vault-id=pass.txt -a &quot;src=data.txt dest=/tmpl mode=0600&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>playbook调用敏感数据（账户名、密码等）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/variables.yml</span><br><span class="line">iname: cloud</span><br><span class="line">ipass: &#x27;123456&#x27;</span><br><span class="line">[root@control ansible]# ansible-vault encrypt variables.yml</span><br><span class="line">[root@control ansiblej# cat ~/ansible/vault.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  vars_files: variables.yml</span><br><span class="line">  tasks:</span><br><span class="line">	- name: include vault data, create user.</span><br><span class="line">	  user:</span><br><span class="line">		name: &quot;&#123;&#123;iname&#125;&#125;&quot;</span><br><span class="line">		password: &quot;&#123;&#123;ipasslpassword_hash(&#x27;sha512&#x27;)&#125;&#125;”</span><br><span class="line">[root@control ansibilej# ansible-playbook --ask-vault-pass vault.yml</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="ansible-roles"><a href="#ansible-roles" class="headerlink" title="ansible roles"></a>ansible roles</h1><h2 id="什么是roles"><a href="#什么是roles" class="headerlink" title="什么是roles"></a>什么是roles</h2><ul>
+<li><p>在实际生产环境中，为了实现不同的功能,我们会编写大量的playbook文件</p>
+</li>
+<li><p>而且，每个playbook还可能会调用其他文件（如变量文件)</p>
+</li>
+<li><p>对于海量的、无规律的文件，管理起来非常痛苦!</p>
+</li>
+<li><p>Ansible从1.2版本开始支持Roles</p>
+</li>
+<li><p>Roles是管理ansible文件的一种规范(目录结构)</p>
+<ul>
+<li>Roles会按照标准的规范，自动到特定的目录和文件中读取数据</li>
+</ul>
+</li>
+</ul>
+<h2 id="roles规范的目录结构"><a href="#roles规范的目录结构" class="headerlink" title="roles规范的目录结构"></a>roles规范的目录结构</h2><ul>
+<li>如果我们创建了一个名称为user.example的role<ul>
+<li>其标准的目录结构如下所示</li>
+</ul>
+</li>
+</ul>
+<p><img src="/ansible-base/Learning/PersonalBlog\CodeChenBlog\source_posts\ansible-base\Snipaste_2022-03-23_15-22-51.jpg"></p>
+<ul>
+<li><p>defualts/main.yml:定义变量的缺省值，优先级较低</p>
+</li>
+<li><p>files目录:存储静态文件的目录</p>
+</li>
+<li><p>handlers/main.yml:定义handlers</p>
+</li>
+<li><p>meta/main.yml:写作者、版本等描述信息</p>
+</li>
+<li><p>README.md:整个角色(role)的描述信息</p>
+</li>
+<li><p>tasks/main.yml:定义任务的地方</p>
+</li>
+<li><p>templates目录:存放动态数据文件的地方(模板文件)</p>
+</li>
+<li><p>vars/main.yml:定义变量,优先级高</p>
+</li>
+</ul>
+<p>小结：roles就是一组规范的目录结构</p>
+<h2 id="应用案例-1"><a href="#应用案例-1" class="headerlink" title="应用案例"></a>应用案例</h2><ul>
+<li>ansible-galaxy命令可以创建、管理自己的roles</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# mkdir ~/ansible/roles</span><br><span class="line"></span><br><span class="line">[root@control ansible]# ansible-galaxy init ~/ansible/roles/issue</span><br><span class="line"><span class="meta">#</span><span class="bash">创建一个Role，该Role的目的是使用模板修改远程主机的/etc/issue文件</span></span><br><span class="line"></span><br><span class="line">[root@control ansible]# tree ~/ansible/roles/issuel</span><br><span class="line"><span class="meta">#</span><span class="bash">查看目录结构，如果没有tree命令则需要使用yum安装该软件</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>定义issue文件的模板文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/roles/issue/templates/issue.j2</span><br><span class="line">This is the system &#123;&#123;fansible_hostname&#125;&#125;</span><br><span class="line">Today&#x27;s date is:&#123;fansible_date_time.date&#125;&#125;</span><br><span class="line">Contact to &#123;&#123; admin &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>定义变量文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/roles/issue/vars/main.yml</span><br><span class="line">---</span><br><span class="line"><span class="meta">#</span><span class="bash"> vars file <span class="keyword">for</span> /root/ansible/roles/issue</span></span><br><span class="line">admin: yoyo@tedu.cn</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改任务文件，任务文件中不需要tasks关键字<ul>
+<li>role的各个文件之间相互调用不需要写路径</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/roleslissue/tasks/main.yml</span><br><span class="line">---</span><br><span class="line"><span class="meta">#</span><span class="bash"> tasks file <span class="keyword">for</span> /root/ansible/roles/issue</span></span><br><span class="line">- name: delever issue file</span><br><span class="line">  template:</span><br><span class="line">    src: issue.j2</span><br><span class="line">    dest:/etc/issue</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="在playbook中调用role"><a href="#在playbook中调用role" class="headerlink" title="在playbook中调用role"></a>在playbook中调用role</h2><ul>
+<li>方法一：在role相同目录下创建一个playbook调用</li>
+<li>方法二：在ansible.cfg设置roles_path=路径</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansiblelansible.cfg</span><br><span class="line">[defaults]</span><br><span class="line">remote_user = root</span><br><span class="line">inventory = ./inventory</span><br><span class="line">roles_path = ./roles</span><br><span class="line">[privilege_escalation]</span><br><span class="line">become=True</span><br><span class="line">become_method=sudo</span><br><span class="line">become_user=root</span><br><span class="line">become_ask_pass=False</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编写playbook文件，通过roles关键词调用role</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~/ansible/issue.yml</span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  roles:</span><br><span class="line">	- issue</span><br><span class="line"><span class="meta">   #</span><span class="bash">-role2   <span class="comment">#支持加载多个role</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="ansible-galaxy"><a href="#ansible-galaxy" class="headerlink" title="ansible-galaxy"></a>ansible-galaxy</h2><ul>
+<li>ansible galaxy是官方提供的一个共享roles的平台<ul>
+<li>公共roles仓库（<a target="_blank" rel="noopener" href="http://galaxy.ansible.com)/">http://galaxy.ansible.com）</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# ansible-galaxy search &#x27;httpd&#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash">联网搜索roles</span></span><br><span class="line"></span><br><span class="line">[root@control ansible]# ansible-galaxy info acandid.httpd</span><br><span class="line"><span class="meta">#</span><span class="bash">查看roles基本信息</span></span><br><span class="line"></span><br><span class="line">[root@control ansible]# ansible-galaxy install acandid.httpd -p ~/ansible/roles/</span><br><span class="line"><span class="meta">#</span><span class="bash">下载roles到特定的目录</span></span><br><span class="line"></span><br><span class="line">[root@control ansible]# ansible-galaxy list -p roles/</span><br><span class="line"><span class="meta">#</span><span class="bash">列出本地有哪些roles</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>下载roles的方法：<ul>
+<li>使用ansible-galaxy install或者编写requirements.yml文件</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@control ansible]# cat ~lansible/roles/requirements.yml</span><br><span class="line"><span class="meta">#</span><span class="bash">格式一:直接从Ansible Galaxy官网下载</span></span><br><span class="line">- src: acandid.httpd</span><br><span class="line"><span class="meta">#</span><span class="bash">格式二:从某个git服务器下载</span></span><br><span class="line">- src: http://gitlab.com/xxx/xxx.git</span><br><span class="line">  scm: git</span><br><span class="line">  version: 56e00a54</span><br><span class="line">  name: nginx-acme</span><br><span class="line"><span class="meta">#</span><span class="bash">格式三:下载tar包，支持http、https、file</span></span><br><span class="line">- src: http://example.com/myrole.tar</span><br><span class="line">  name: myrole</span><br><span class="line">[root@control ansible]# ansible-galaxy install -r roles/requirements.yml -p roles</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="综合案例"><a href="#综合案例" class="headerlink" title="综合案例"></a>综合案例</h1><h2 id="自动化部署web集群"><a href="#自动化部署web集群" class="headerlink" title="自动化部署web集群"></a>自动化部署web集群</h2><ul>
+<li>创建role，通过role完成项目（可能需要多个role）</li>
+<li>部署Nginx调度器</li>
+<li>部署2台LNMP服务器</li>
+<li>部署MariaDB数据库</li>
+</ul>
+<p>创建role部署后端LNMP平台环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible-galaxy init ~/ansible/roles/lnmp</span><br><span class="line">- Role /root/ansible/roles/lnmp was created successfully</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ls roles</span><br><span class="line">lnmp</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ls roles/lnmp/</span><br><span class="line">defaults  files  handlers  meta  README.md  tasks  templates  tests  vars</span><br></pre></td></tr></table></figure>
+
+<p>在控制端中files文件中放入Nginx安装包</p>
+<p><img src="/ansible-base/Learning/PersonalBlog\CodeChenBlog\source_posts\ansible-base\Snipaste_2022-03-23_16-17-29.jpg"></p>
+<p>编写脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv lnmp]# vim ~/ansible/roles/lnmp/files/install_nginx.sh</span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">conf=&quot;/usr/local/nginx/conf/nginx.conf&quot;</span><br><span class="line">yum -y install gcc pcre-devel openssl-devel make</span><br><span class="line">cd /tmp/</span><br><span class="line">tar -xf nginx-1.20.2.tar.gz</span><br><span class="line">cd nginx-1.20.2</span><br><span class="line">./configure --with-http_ssl_module</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">sed -i &#x27;65,71s/#//&#x27; $conf   # 删除65-71行的#</span><br><span class="line">sed -i &#x27;/SCRIPT_FILENAME/d&#x27; $conf   # 删除此行</span><br><span class="line">sed -i &#x27;s/fastcgi_params/fastcgi.conf/&#x27; $conf</span><br></pre></td></tr></table></figure>
+
+<p>编写网页</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv lnmp]# vim ~/ansible/roles/lnmp/templates/index.html</span><br><span class="line">welcome to &#123;&#123; ansible_hostname &#125;&#125; on &#123;&#123; ansible_all_ipv4_addresses &#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在task中编写任务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv lnmp]# vim ~/ansible/roles/lnmp/tasks/main.yml</span><br><span class="line">---</span><br><span class="line"><span class="meta">#</span><span class="bash"> tasks file <span class="keyword">for</span> /root/ansible/roles/lnmp</span></span><br><span class="line">- name: copy nginx-1.20.2.tar.gz to webserver.</span><br><span class="line">  copy:</span><br><span class="line">    src: nginx-1.20.2.tar.gz</span><br><span class="line">    dest: /tmp/</span><br><span class="line">- name: install nginx through shell script.</span><br><span class="line">  script: install_nginx.sh</span><br><span class="line">  args:</span><br><span class="line">    creates: /usr/local/nginx/sbin/nginx</span><br><span class="line">- name: copy index.html to webserver.</span><br><span class="line">  template:</span><br><span class="line">    src: index.html</span><br><span class="line">    dest: /usr/local/nginx/html/index.html</span><br><span class="line">- name: install php</span><br><span class="line">  yum:</span><br><span class="line">    name: </span><br><span class="line">      - php</span><br><span class="line">      - php-fpm</span><br><span class="line">      - php-mysqlnd</span><br><span class="line">      - mariadb-devel</span><br><span class="line">- name: run all service</span><br><span class="line">  block:</span><br><span class="line">    - service:</span><br><span class="line">        name: php-fpm</span><br><span class="line">        state: started</span><br><span class="line">    - shell: /usr/local/nginx/sbin/nginx</span><br><span class="line">      args:</span><br><span class="line">        creates: /usr/local/nginx/logs/nginx.pid</span><br></pre></td></tr></table></figure>
+
+<p>编写自动化部署剧本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv lnmp]# vim ~/ansible/lnmp.yml</span><br><span class="line">[root@MiWiFi-R1CL-srv lnmp]# cat ~/ansible/lnmp.yml</span><br><span class="line">---</span><br><span class="line">- hosts: webserver</span><br><span class="line">  roles:</span><br><span class="line">    - lnmp</span><br></pre></td></tr></table></figure>
+
+<p>运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible-playbook lnmp.yml </span><br><span class="line"></span><br><span class="line">PLAY [webserver] ******************************************************************</span><br><span class="line"></span><br><span class="line">TASK [Gathering Facts] ************************************************************</span><br><span class="line">ok: [node4]</span><br><span class="line">ok: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : copy nginx-1.20.2.tar.gz to webserver.] ******************************</span><br><span class="line">changed: [node4]</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : install nginx through shell script.] *********************************</span><br><span class="line">changed: [node4]</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : copy index.html to webserver.] ***************************************</span><br><span class="line">changed: [node3]</span><br><span class="line">changed: [node4]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : install php] *********************************************************</span><br><span class="line">changed: [node4]</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : service] *************************************************************</span><br><span class="line">changed: [node4]</span><br><span class="line">fatal: [node3]: FAILED! =&gt; &#123;&quot;changed&quot;: false, &quot;msg&quot;: &quot;Unable to start service php-fpm: Job for php-fpm.service failed because the control process exited with error code. See \&quot;systemctl status php-fpm.service\&quot; and \&quot;journalctl -xe\&quot; for details.\n&quot;&#125;</span><br><span class="line"></span><br><span class="line">TASK [lnmp : shell] ***************************************************************</span><br><span class="line">changed: [node4]</span><br><span class="line"></span><br><span class="line">PLAY RECAP ************************************************************************</span><br><span class="line">node3                      : ok=5    changed=4    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   </span><br><span class="line">node4                      : ok=7    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 出现问题，查看对应主机的日志</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ~]# tail -20 /var/log/messages</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 再次执行，成功</span></span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible-playbook lnmp.yml </span><br><span class="line"></span><br><span class="line">PLAY [webserver] ******************************************************************</span><br><span class="line"></span><br><span class="line">TASK [Gathering Facts] ************************************************************</span><br><span class="line">ok: [node4]</span><br><span class="line">ok: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : copy nginx-1.20.2.tar.gz to webserver.] ******************************</span><br><span class="line">ok: [node4]</span><br><span class="line">ok: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : install nginx through shell script.] *********************************</span><br><span class="line">skipping: [node3]</span><br><span class="line">skipping: [node4]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : copy index.html to webserver.] ***************************************</span><br><span class="line">ok: [node4]</span><br><span class="line">ok: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : install php] *********************************************************</span><br><span class="line">ok: [node4]</span><br><span class="line">ok: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : service] *************************************************************</span><br><span class="line">ok: [node4]</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">TASK [lnmp : shell] ***************************************************************</span><br><span class="line">ok: [node4]</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP ************************************************************************</span><br><span class="line">node3                      : ok=6    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   </span><br><span class="line">node4                      : ok=6    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0 </span><br></pre></td></tr></table></figure>
+
+<p>在node3和node4主机确认一下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Nginx已安装</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ls /usr/<span class="built_in">local</span>/nginx/</span></span><br><span class="line">client_body_temp  fastcgi_temp  logs        sbin       uwsgi_temp</span><br><span class="line">conf              html          proxy_temp  scgi_temp</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Nginx已启动</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ss -nutlp | grep :80</span></span><br><span class="line">tcp    LISTEN     0      128       *:80                    *:*                   users:((&quot;nginx&quot;,pid=4689,fd=6),(&quot;nginx&quot;,pid=4688,fd=6))</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> PHP已安装</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rpm -q php</span></span><br><span class="line">php-5.4.16-48.el7.x86_64</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> php-fpm已安装</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rpm -q php-fpm</span></span><br><span class="line">php-fpm-5.4.16-48.el7.x86_64</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> cat /usr/<span class="built_in">local</span>/nginx/html/index.html</span></span><br><span class="line">welcome to MiWiFi-R1CL-srv on [u&#x27;192.168.122.1&#x27;, u&#x27;192.168.31.248&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>创建role部署代理服务环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible-galaxy init ~/ansible/roles/proxy</span><br><span class="line">- Role /root/ansible/roles/proxy was created successfully</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# ls ~/ansible/roles/proxy/</span><br><span class="line">defaults  files  handlers  meta  README.md  tasks  templates  tests  vars</span><br><span class="line">[root@MiWiFi-R1CL-srv ansible]# cp ~/ansible/roles/lnmp/files/* ~/ansible/roles/proxy/files/</span><br></pre></td></tr></table></figure>
+
+<p>配置代理服务器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv files]# cat ~/ansible/roles/proxy/files/install_nginx.sh </span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">conf=&quot;/usr/local/nginx/conf/nginx.conf&quot;</span><br><span class="line">yum -y install gcc pcre-devel openssl-devel make</span><br><span class="line">cd /tmp/</span><br><span class="line">tar -xf nginx-1.20.2.tar.gz</span><br><span class="line">cd nginx-1.20.2</span><br><span class="line">./configure --with-http_ssl_module</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">sed -i &#x27;/^http/a upstream webs &#123; \n server 192.168.31.248;\n server 192.168.31.217;\n &#125;\n&#x27; $conf</span><br><span class="line">sed -i &#x27;49i proxy_pass http://webs;&#x27; $conf</span><br><span class="line">/usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+
+<p>编写任务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv proxy]# vim ~/ansible/roles/proxy/tasks/main.yml</span><br><span class="line">---</span><br><span class="line"><span class="meta">#</span><span class="bash"> tasks file <span class="keyword">for</span> /root/ansible/roles/proxy</span></span><br><span class="line">- name: copy source file to node2</span><br><span class="line">  copy:</span><br><span class="line">    src: nginx-1.20.2.tar.gz</span><br><span class="line">    dest: /tmp/</span><br><span class="line">- name: install nginx.</span><br><span class="line">  script: install_nginx.sh</span><br><span class="line">  args:</span><br><span class="line">    creates: /usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+
+<p>编写剧本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# vim ~/ansible/proxy.yml</span><br><span class="line">---</span><br><span class="line">- hosts: node2</span><br><span class="line">  roles:</span><br><span class="line">    - proxy</span><br><span class="line">    </span><br><span class="line">- hosts: node5</span><br><span class="line">  tasks:</span><br><span class="line">    - name: install mariadb server</span><br><span class="line">      yum:</span><br><span class="line">        name:</span><br><span class="line">          - mariadb</span><br><span class="line">          - mariadb-server</span><br><span class="line">          - mariadb-devel</span><br><span class="line">    - name: run mariadb server</span><br><span class="line">      service:</span><br><span class="line">        name: mariadb</span><br><span class="line">        state: started</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ansible]# ansible-playbook proxy.yml </span><br><span class="line"></span><br><span class="line">PLAY [node2] **********************************************************************</span><br><span class="line"></span><br><span class="line">TASK [Gathering Facts] ************************************************************</span><br><span class="line">Warning: the ECDSA host key for &#x27;node2&#x27; differs from the key for the IP address &#x27;192.168.31.208&#x27;</span><br><span class="line">Offending key for IP in /root/.ssh/known_hosts:2</span><br><span class="line">Matching host key in /root/.ssh/known_hosts:6</span><br><span class="line">Are you sure you want to continue connecting (yes/no)? yes</span><br><span class="line">ok: [node2]</span><br><span class="line"></span><br><span class="line">TASK [proxy : copy source file to node2] ******************************************</span><br><span class="line">changed: [node2]</span><br><span class="line"></span><br><span class="line">TASK [proxy : install nginx.] *****************************************************</span><br><span class="line">changed: [node2]</span><br><span class="line"></span><br><span class="line">PLAY [node1] **********************************************************************</span><br><span class="line"></span><br><span class="line">TASK [Gathering Facts] ************************************************************</span><br><span class="line">ok: [node1]</span><br><span class="line"></span><br><span class="line">TASK [install mariadb server] *****************************************************</span><br><span class="line">changed: [node1]</span><br><span class="line"></span><br><span class="line">TASK [run mariadb server] *********************************************************</span><br><span class="line">changed: [node1]</span><br><span class="line"></span><br><span class="line">PLAY RECAP ************************************************************************</span><br><span class="line">node1                      : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   </span><br><span class="line">node2                      : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0</span><br></pre></td></tr></table></figure>
+
+<p>在node2关闭http</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@MiWiFi-R1CL-srv ~]# firewall-cmd --add-service=http</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/zookeeper-base/" rel="next" title="zookeeper">
+                <i class="fa fa-chevron-left"></i> zookeeper
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/vue-base/" rel="prev" title="vue基础">
+                vue基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPicture1.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cjsong125" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="735709343@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/1920834272" target="_blank" title="weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cjsong125.github.io" title="CodeChenBlog" target="_blank">CodeChenBlog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ansible-ad-hoc"><span class="nav-text">ansible ad-hoc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E9%97%A8"><span class="nav-text">入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E6%A8%A1%E5%9D%97"><span class="nav-text">shell模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script%E6%A8%A1%E5%9D%97"><span class="nav-text">script模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file%E6%A8%A1%E5%9D%97"><span class="nav-text">file模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copy%E6%A8%A1%E5%9D%97"><span class="nav-text">copy模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fetch%E6%A8%A1%E5%9D%97"><span class="nav-text">fetch模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lineinfile-replace%E6%A8%A1%E5%9D%97"><span class="nav-text">lineinfile | replace模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#user%E6%A8%A1%E5%9D%97"><span class="nav-text">user模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum-repository%E6%A8%A1%E5%9D%97"><span class="nav-text">yum_repository模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum%E6%A8%A1%E5%9D%97"><span class="nav-text">yum模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%8D%B7%E7%9B%B8%E5%85%B3%E6%A8%A1%E5%9D%97"><span class="nav-text">逻辑卷相关模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sudo%E6%8F%90%E6%9D%83"><span class="nav-text">sudo提权</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sudoers%E8%AF%AD%E6%B3%95"><span class="nav-text">sudoers语法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE"><span class="nav-text">高级配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#playbook"><span class="nav-text">playbook</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YAML%E6%A0%BC%E5%BC%8F"><span class="nav-text">YAML格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F"><span class="nav-text">playbook语法格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B%E4%B9%8B%E7%94%A8%E6%88%B7"><span class="nav-text">playbook应用案例之用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="nav-text">playbook应用案例之软件管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setup%E6%A8%A1%E5%9D%97"><span class="nav-text">setup模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug%E6%A8%A1%E5%9D%97"><span class="nav-text">debug模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F"><span class="nav-text">定义变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-text">应用案例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ansible%E6%A8%A1%E5%9D%97%E5%BA%94%E7%94%A8"><span class="nav-text">ansible模块应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#firewalld%E6%A8%A1%E5%9D%97"><span class="nav-text">firewalld模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#template%E6%A8%A1%E5%9D%97"><span class="nav-text">template模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ansible%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95"><span class="nav-text">ansible高级语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#error%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-text">error处理机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#handlers"><span class="nav-text">handlers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#when%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD"><span class="nav-text">when条件判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#block%E4%BB%BB%E5%8A%A1%E5%9D%97"><span class="nav-text">block任务块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loop%E5%BE%AA%E7%8E%AF"><span class="nav-text">loop循环</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ansible-vault"><span class="nav-text">ansible vault</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E6%96%87%E4%BB%B6"><span class="nav-text">加密文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ansible-roles"><span class="nav-text">ansible roles</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFroles"><span class="nav-text">什么是roles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roles%E8%A7%84%E8%8C%83%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-text">roles规范的目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B-1"><span class="nav-text">应用案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8playbook%E4%B8%AD%E8%B0%83%E7%94%A8role"><span class="nav-text">在playbook中调用role</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible-galaxy"><span class="nav-text">ansible-galaxy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B"><span class="nav-text">综合案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2web%E9%9B%86%E7%BE%A4"><span class="nav-text">自动化部署web集群</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CodeChen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访问数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '6BRrBnAHS7a11TcVJ70lEGpJ-gzGzoHsz',
+        appKey: 'UC71zLA2sOyVPdG7c54dpBfG',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

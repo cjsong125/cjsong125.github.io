@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="zookeeper," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、zookeeper介绍简介 zookeeper是一种分布式协调服务，用于管理大型主机。在分布式环境中协调和管理服务是一个复杂的过程。zookeeper通过其简单的架构和API解决了这个问题。zookeeper允许开发人员专注于核心应用程序逻辑，而不必担心应用程序的分布式特性 ZooKeeper主要服务于分布式系统，可以用ZooKeeper来做：统一配置管理、统一命名服务、分布式锁、集群管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper">
+<meta property="og:url" content="https://cjsong125.github.io/zookeeper-base/index.html">
+<meta property="og:site_name" content="CodeChenBlog">
+<meta property="og:description" content="一、zookeeper介绍简介 zookeeper是一种分布式协调服务，用于管理大型主机。在分布式环境中协调和管理服务是一个复杂的过程。zookeeper通过其简单的架构和API解决了这个问题。zookeeper允许开发人员专注于核心应用程序逻辑，而不必担心应用程序的分布式特性 ZooKeeper主要服务于分布式系统，可以用ZooKeeper来做：统一配置管理、统一命名服务、分布式锁、集群管理。">
+<meta property="og:locale">
+<meta property="og:image" content="https://cjsong125.github.io/D:/Learning/PersonalBlog/CodeChenBlog/source_posts/zookeeper-base/20180712143454552.png">
+<meta property="og:image" content="https://cjsong125.github.io/D:/Learning/PersonalBlog/CodeChenBlog/source_posts/zookeeper-base/Snipaste_2022-03-15_15-22-01.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/D:/Learning/PersonalBlog/CodeChenBlog/source_posts/zookeeper-base/Snipaste_2022-03-15_15-25-22.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/D:/Learning/PersonalBlog/CodeChenBlog/source_posts/zookeeper-base/201807121434154.png">
+<meta property="og:image" content="https://cjsong125.github.io/D:/Learning/PersonalBlog/CodeChenBlog/source_posts/zookeeper-base/Snipaste_2022-03-15_16-06-17.jpg">
+<meta property="og:image" content="https://cjsong125.github.io/D:/Learning/PersonalBlog/CodeChenBlog/source_posts/zookeeper-base/Snipaste_2022-03-15_16-28-46.jpg">
+<meta property="article:published_time" content="2022-03-15T07:18:05.000Z">
+<meta property="article:modified_time" content="2022-04-09T08:32:32.870Z">
+<meta property="article:author" content="CodeChen">
+<meta property="article:tag" content="zookeeper">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cjsong125.github.io/D:/Learning/PersonalBlog/CodeChenBlog/source_posts/zookeeper-base/20180712143454552.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://cjsong125.github.io/zookeeper-base/"/>
+
+
+
+
+
+  <title>zookeeper | CodeChenBlog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CodeChenBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cjsong125.github.io/zookeeper-base/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPicture1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CodeChenBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">zookeeper</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-03-15T15:18:05+08:00">
+                2022-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/zookeeper-base/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/zookeeper-base/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读数 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、zookeeper介绍"><a href="#一、zookeeper介绍" class="headerlink" title="一、zookeeper介绍"></a>一、zookeeper介绍</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>zookeeper是一种分布式协调服务，用于管理大型主机。在分布式环境中协调和管理服务是一个复杂的过程。zookeeper通过其简单的架构和API解决了这个问题。zookeeper允许开发人员专注于核心应用程序逻辑，而不必担心应用程序的分布式特性</li>
+<li>ZooKeeper主要<strong>服务于分布式系统</strong>，可以用ZooKeeper来做：统一配置管理、统一命名服务、分布式锁、集群管理。</li>
+<li>使用分布式系统就无法避免对节点管理的问题(需要实时感知节点的状态、对节点进行统一管理等等)，而由于这些问题处理起来可能相对麻烦和提高了系统的复杂性，ZooKeeper作为一个能够<strong>通用</strong>解决这些问题的中间件就应运而生了。</li>
+</ul>
+<p>假设我们的程序是分布式部署在多台机器上，如果我们要改变程序的配置文件，需要逐台机器去修改，非常麻烦，现在把这些配置全部放到zookeeper上去，保存在 zookeeper 的某个目录节点中，然后所有相关应用程序对这个目录节点进行监听，一旦配置信息发生变化，每个应用程序就会收到 zookeeper 的通知，然后从 zookeeper 获取新的配置信息应用到系统中。</p>
+<p><img src="/D:/Learning\PersonalBlog\CodeChenBlog\source_posts\zookeeper-base\20180712143454552.png"></p>
+<h2 id="zookeeper应用场景"><a href="#zookeeper应用场景" class="headerlink" title="zookeeper应用场景"></a>zookeeper应用场景</h2><ul>
+<li>分布式协调组件</li>
+</ul>
+<p><img src="/D:/Learning\PersonalBlog\CodeChenBlog\source_posts\zookeeper-base\Snipaste_2022-03-15_15-22-01.jpg"></p>
+<p>​    在分布式系统中，需要有zookeeper作为分布式协调组件，协调分布式系统中的状态。</p>
+<ul>
+<li><p>分布式锁</p>
+<p>zk在实现分布式锁上，可以做到强一致性，关于分布式锁相关的知识，在之后的ZAB协议中介绍。</p>
+</li>
+<li><p>无状态化的实现</p>
+<p><img src="/D:/Learning\PersonalBlog\CodeChenBlog\source_posts\zookeeper-base\Snipaste_2022-03-15_15-25-22.jpg"></p>
+</li>
+</ul>
+<h1 id="二、搭建zookeeper服务器"><a href="#二、搭建zookeeper服务器" class="headerlink" title="二、搭建zookeeper服务器"></a>二、搭建zookeeper服务器</h1><h2 id="zoo-cfg配置文件说明"><a href="#zoo-cfg配置文件说明" class="headerlink" title="zoo.cfg配置文件说明"></a>zoo.cfg配置文件说明</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">zookeeper时间配置中的基李单位（毫秒)</span></span><br><span class="line">tickTime=200o</span><br><span class="line"><span class="meta">#</span><span class="bash">允许follower初始化连接到leader最大时长，它表示tickTime时间倍数即:initLimit*tickTime</span></span><br><span class="line">initLimit=10</span><br><span class="line"><span class="meta">#</span><span class="bash">允许follower与leader数据同步最大时长,它表示tickTime时间倍数</span></span><br><span class="line">syncLimit=5</span><br><span class="line"><span class="meta">#</span><span class="bash">zookeper数据存储目录及日志保存目录〈如果没有指明dataLogDir，则日志也保存在这个文件中)</span></span><br><span class="line">dataDir=/tmp/zookeeper</span><br><span class="line"><span class="meta">#</span><span class="bash">对客户端提供的端口号</span></span><br><span class="line">clientPort=2181</span><br><span class="line"><span class="meta">#</span><span class="bash">单个客户端与zookeeper最大并发连接数</span></span><br><span class="line">maxClientcnxns=60</span><br><span class="line"><span class="meta">#</span><span class="bash">保存的数据快照数量,之外的将会被清除</span></span><br><span class="line">autopurge.snapRetainCount=3</span><br><span class="line"><span class="meta">#</span><span class="bash">自动触发清除任务时间间隔，小时为单位。默认为0，表示不自动清除。</span></span><br><span class="line">autopurge.purgeInterval=1</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="zookeeper服务器的操作命令"><a href="#zookeeper服务器的操作命令" class="headerlink" title="zookeeper服务器的操作命令"></a>zookeeper服务器的操作命令</h2><ul>
+<li><p>重命名conf中的文件zoo_sample.cfg-&gt;zoo.cfg</p>
+</li>
+<li><p>启动zk服务器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkServer.sh start ./conf/zoo.cfh</span><br></pre></td></tr></table></figure></li>
+<li><p>查看zk服务器状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkServer.sh status ./conf/zoo.cfh</span><br></pre></td></tr></table></figure></li>
+<li><p>停止zk服务器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkServer.sh stop ./conf/zoo.cfh</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>启动服务端后就可以启动客户端</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-24-12-centos bin]# ./zkCli.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="三、zookeeper内部的数据模型"><a href="#三、zookeeper内部的数据模型" class="headerlink" title="三、zookeeper内部的数据模型"></a>三、zookeeper内部的数据模型</h1><h2 id="zk是如何保存数据的"><a href="#zk是如何保存数据的" class="headerlink" title="zk是如何保存数据的"></a>zk是如何保存数据的</h2><p>Zookeeper维护一个类似文件系统的数据结构：</p>
+<p><img src="/D:/Learning\PersonalBlog\CodeChenBlog\source_posts\zookeeper-base\201807121434154.png"></p>
+<p>每个子目录项如 NameService 都被称作为 znode(目录节点)，和文件系统一样，我们能够自由的增加、删除znode，在一个znode下增加、删除子znode，唯一的不同在于znode是可以存储数据的。</p>
+<p>zk中的数据是保存在节点上的，节点就是znode，多个znode之间构成一颗树的目录结构。</p>
+<p>zookeeper的数据模型是什么样子呢？它很像数据结构当中的树，也很像文件系统的目录。</p>
+<p><img src="/D:/Learning\PersonalBlog\CodeChenBlog\source_posts\zookeeper-base\Snipaste_2022-03-15_16-06-17.jpg"></p>
+<p>树是由节点所组成，zookeeper的数据存储也同样是基于节点，这种节点叫做Znode</p>
+<p>但是，不同于树的节点，Znode的引用方式是路径引用，类似于文件路径</p>
+<p>这种层级结构，让每一个Znode节点拥有唯一的路径，就像命名空间一样对不同信息作出清晰的隔离。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 0] ls /</span><br><span class="line">[zookeeper]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 1] create /test1</span><br><span class="line">Created /test1</span><br><span class="line">[zk: localhost:2181(CONNECTED) 2] ls /</span><br><span class="line">[test1, zookeeper]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 3] create /test1</span><br><span class="line">Node already exists: /test1</span><br><span class="line">[zk: localhost:2181(CONNECTED) 4] create /test1/sub1</span><br><span class="line">Created /test1/sub1</span><br><span class="line">[zk: localhost:2181(CONNECTED) 5] ls /</span><br><span class="line">[test1, zookeeper]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 6] create test2 abc</span><br><span class="line">Path must start with / character</span><br><span class="line">[zk: localhost:2181(CONNECTED) 7] create /test2 abc</span><br><span class="line">Created /test2</span><br><span class="line">[zk: localhost:2181(CONNECTED) 8] get /test2</span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="zk中的znode是什么样的结构"><a href="#zk中的znode是什么样的结构" class="headerlink" title="zk中的znode是什么样的结构"></a>zk中的znode是什么样的结构</h2><p>zk中的znode，包含了四个部分：</p>
+<ul>
+<li>data：保存数据</li>
+<li>acl：权限，定义了什么样的用户能够操作这个节点，且能够进行怎样的操作。<ul>
+<li>c：create创建权限，允许在该节点下创建子节点</li>
+<li>w：write更新权限，允许更新该节点的数据</li>
+<li>r：read读取权限，允许读取节点的内容以及子节点的列表信息</li>
+<li>d：delete删除权限，允许删除该节点的子节点</li>
+<li>a：admin管理者权限。允许对该节点进行acl权限设置</li>
+</ul>
+</li>
+<li>stat：描述当前znode的元数据</li>
+<li>child：当前节点的子节点</li>
+</ul>
+<h2 id="zk中节点znode的类型"><a href="#zk中节点znode的类型" class="headerlink" title="zk中节点znode的类型"></a>zk中节点znode的类型</h2><ul>
+<li><p>持久节点：创建出的节点，在会话结束后依然存在。保存数据。</p>
+</li>
+<li><p>持久序号节点：创建出的节点，根据先后顺序，会在节点之后带上一个数值，越后执行数值越大，适用于分布式锁的应用场景-单调递增</p>
+</li>
+<li><p>临时节点：</p>
+<p>临时节点是在会话结束后，自动被删除的，通过这个特性，zk可以实现服务注册与发现的效果。</p>
+<p><img src="/D:/Learning\PersonalBlog\CodeChenBlog\source_posts\zookeeper-base\Snipaste_2022-03-15_16-28-46.jpg"></p>
+</li>
+<li><p>临时序号节点：和持久序号节点相同，适用于临时的分布式锁</p>
+</li>
+<li><p>Container节点：Container容器节点，当容器中没有任何子节点，该容器节点会被zk定期删除（60s）</p>
+</li>
+<li><p>TTL节点：可以指定节点的到期时间，到期后被zk定时删除，只能通过系统配置zookeeper.extendedTypesEnabled=true开启</p>
+</li>
+</ul>
+<h2 id="zk的数据持久化"><a href="#zk的数据持久化" class="headerlink" title="zk的数据持久化"></a>zk的数据持久化</h2><p>zk的数据是运行在内存中，zk提供了两种持久化机制:</p>
+<ul>
+<li><p>事务日志</p>
+<p>zk把执行的命令以日志形式保存在dataLogDir指定的路径中的文件中〈如果没有指定dataLogDir，则按dataDir指定的路径)。</p>
+</li>
+<li><p>数据快照</p>
+<p>zk会在一定的时间间隔内做一次内存数据的快照，把该时刻的内存数据保存在快照文件中。</p>
+</li>
+</ul>
+<p>zk通过两种形式的持久化，在恢复时先恢复快照文件中的数据到内存中，再用日志文件中的数据做增量恢复，这样的恢复速度更快。</p>
+<h1 id="四、zookeeper客户端（zkCli）的使用"><a href="#四、zookeeper客户端（zkCli）的使用" class="headerlink" title="四、zookeeper客户端（zkCli）的使用"></a>四、zookeeper客户端（zkCli）的使用</h1><h2 id="多节点类型创建"><a href="#多节点类型创建" class="headerlink" title="多节点类型创建"></a>多节点类型创建</h2><ul>
+<li>创建持久节点</li>
+<li>创建持久序号节点</li>
+<li>创建临时节点</li>
+<li>创建临时序号节点</li>
+<li>创建容器节点</li>
+</ul>
+<h2 id="监听通知机制"><a href="#监听通知机制" class="headerlink" title="监听通知机制"></a>监听通知机制</h2><p>客户端注册监听它关心的目录节点，当目录节点发生变化（数据改变、被删除、子目录节点增加删除）时，zookeeper会通知客户端。</p>
+<h2 id="查询节点"><a href="#查询节点" class="headerlink" title="查询节点"></a>查询节点</h2><ul>
+<li>普通查询</li>
+<li>查询节点相关信息<ul>
+<li>cZxid：创建节点的事物ID</li>
+<li>mZxid：修改节点的事物ID</li>
+<li>pZxid：添加和删除子节点的事物ID</li>
+<li>ctime：节点创建的时间</li>
+<li>mtime：节点最近修改的时间</li>
+<li>dataVersion：节点内数据的版本，每更新一次数据，版本会+1</li>
+<li>aclVersion：此节点的权限版本</li>
+<li>ephemeralOwner：如果当前节点是临时节点，该值是当前节点所有者的session id。如果节点不是临时节点，则该值为零。</li>
+<li>dataLength：节点内数据的长度</li>
+<li>numChildren：该节点的子节点个数</li>
+</ul>
+</li>
+</ul>
+<h2 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h2><ul>
+<li>删除节点</li>
+<li>乐观锁删除</li>
+</ul>
+<h2 id="权限设置"><a href="#权限设置" class="headerlink" title="权限设置"></a>权限设置</h2><ul>
+<li><p>注册当前会话的账号和密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addauth digest 账号:密码</span><br></pre></td></tr></table></figure></li>
+<li><p>创建节点并设置权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /test-node abcd auth:账号:密码:cdwra</span><br></pre></td></tr></table></figure></li>
+<li><p>在另一个会话中必须先使用密码账号，才能拥有操作该节点的权限</p>
+</li>
+</ul>
+<h1 id="五、curator客户端的使用"><a href="#五、curator客户端的使用" class="headerlink" title="五、curator客户端的使用"></a>五、curator客户端的使用</h1><h2 id="curator介绍"><a href="#curator介绍" class="headerlink" title="curator介绍"></a>curator介绍</h2><p>Curator是Netflix公司开源的一套zookeeper客户端框架，Curator是对Zookeeper支持最好的客户端框架。Curator封装了大部分Zookeeper的功能，比如Leader选举、分布式锁等，减少了技术人员在使用Zookeeper时的底层细节开发工作。</p>
+<h2 id="引入curator"><a href="#引入curator" class="headerlink" title="引入curator"></a>引入curator</h2><ul>
+<li><p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">  </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="六、zk实现分布式锁"><a href="#六、zk实现分布式锁" class="headerlink" title="六、zk实现分布式锁"></a>六、zk实现分布式锁</h1><h1 id="zk中锁的种类："><a href="#zk中锁的种类：" class="headerlink" title="zk中锁的种类："></a>zk中锁的种类：</h1><ul>
+<li><p>读锁：大家都可以读，要想上读锁的前提︰之前的锁没有写锁</p>
+</li>
+<li><p>写锁：只有得到写锁的才能写。要想上写锁的前提是，之前没有任何锁。</p>
+</li>
+</ul>
+<h2 id="zk如何上读锁"><a href="#zk如何上读锁" class="headerlink" title="zk如何上读锁"></a>zk如何上读锁</h2><ul>
+<li><p>创建一个临时序号节点，节点的数据是read，表示是读锁获取当前zk中序号比自己小的所有节点</p>
+</li>
+<li><p>判断最小节点是否是读锁:</p>
+<ul>
+<li><p>如果不是读锁的话，则上锁失败，为最小节点设置监听。阻塞等待，zk的watch机制会当最小节点发生变化时通知当前节点，于是再执行第二步的流程</p>
+</li>
+<li><p>如果是读锁的话，则上锁成功</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="zk如何上写锁"><a href="#zk如何上写锁" class="headerlink" title="zk如何上写锁"></a>zk如何上写锁</h2><ul>
+<li>创建一个临时序号节点，节点的数据是write，表示是写锁</li>
+<li>获取zk中所有的子节点</li>
+<li>判断自己是否是最小的节点：<ul>
+<li>如果是，则上写锁成功</li>
+<li>如果不是，说明前面还有锁，则上锁失败，监听最小的节点，如果最小节点有变化，则回到第二步。</li>
+</ul>
+</li>
+</ul>
+<h2 id="羊群效应"><a href="#羊群效应" class="headerlink" title="羊群效应"></a>羊群效应</h2><p>如果用上述的上锁方式，只要有节点发生变化，就会触发其他节点的监听事件，这样的话对水k的压力非常大，——羊群效应。可以调整成链式监听。解决这个问题。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/zookeeper/" rel="tag"># zookeeper</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/mysql-advanced/" rel="next" title="mysql优化">
+                <i class="fa fa-chevron-left"></i> mysql优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/ansible-base/" rel="prev" title="ansible基础">
+                ansible基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPicture1.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cjsong125" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="735709343@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/1920834272" target="_blank" title="weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cjsong125.github.io" title="CodeChenBlog" target="_blank">CodeChenBlog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81zookeeper%E4%BB%8B%E7%BB%8D"><span class="nav-text">一、zookeeper介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">zookeeper应用场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%90%AD%E5%BB%BAzookeeper%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">二、搭建zookeeper服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zoo-cfg%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="nav-text">zoo.cfg配置文件说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">zookeeper服务器的操作命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81zookeeper%E5%86%85%E9%83%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-text">三、zookeeper内部的数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zk%E6%98%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E7%9A%84"><span class="nav-text">zk是如何保存数据的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zk%E4%B8%AD%E7%9A%84znode%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">zk中的znode是什么样的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zk%E4%B8%AD%E8%8A%82%E7%82%B9znode%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-text">zk中节点znode的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zk%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-text">zk的数据持久化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81zookeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%88zkCli%EF%BC%89%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">四、zookeeper客户端（zkCli）的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B%E5%88%9B%E5%BB%BA"><span class="nav-text">多节点类型创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E9%80%9A%E7%9F%A5%E6%9C%BA%E5%88%B6"><span class="nav-text">监听通知机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%8A%82%E7%82%B9"><span class="nav-text">查询节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9"><span class="nav-text">删除节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE"><span class="nav-text">权限设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81curator%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">五、curator客户端的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#curator%E4%BB%8B%E7%BB%8D"><span class="nav-text">curator介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5curator"><span class="nav-text">引入curator</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81zk%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-text">六、zk实现分布式锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zk%E4%B8%AD%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB%EF%BC%9A"><span class="nav-text">zk中锁的种类：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zk%E5%A6%82%E4%BD%95%E4%B8%8A%E8%AF%BB%E9%94%81"><span class="nav-text">zk如何上读锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zk%E5%A6%82%E4%BD%95%E4%B8%8A%E5%86%99%E9%94%81"><span class="nav-text">zk如何上写锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%8A%E7%BE%A4%E6%95%88%E5%BA%94"><span class="nav-text">羊群效应</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CodeChen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访问数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '6BRrBnAHS7a11TcVJ70lEGpJ-gzGzoHsz',
+        appKey: 'UC71zLA2sOyVPdG7c54dpBfG',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
