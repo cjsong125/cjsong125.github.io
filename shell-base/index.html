@@ -86,15 +86,15 @@
 
 
 
-<meta name="description" content="简介shell脚本 日常运维工作大部分是一些繁琐的重复的工作，每天80%的工作就是重复干昨天的事情，而且工作量还比较大，这就可以让机器操作这些工作。 一个简单脚本 123456789101112131415# 安装Nginx的脚本vim install_nginx.sh# 内容如下yum -y install wget gcc pcre-devel zlib-develwget http:&#x2F;&#x2F;ng">
+<meta name="description" content="简介 shell脚本 日常运维工作大部分是一些繁琐的重复的工作，每天80%的工作就是重复干昨天的事情，而且工作量还比较大，这就可以让机器操作这些工作。 一个简单脚本 123456789101112131415# 安装Nginx的脚本vim install_nginx.sh# 内容如下yum -y install wget gcc pcre-devel zlib-develwget http:&#x2F;&#x2F;n">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell-base">
+<meta property="og:title" content="shell入门">
 <meta property="og:url" content="https://cjsong125.github.io/shell-base/index.html">
 <meta property="og:site_name" content="CodeChenBlog">
-<meta property="og:description" content="简介shell脚本 日常运维工作大部分是一些繁琐的重复的工作，每天80%的工作就是重复干昨天的事情，而且工作量还比较大，这就可以让机器操作这些工作。 一个简单脚本 123456789101112131415# 安装Nginx的脚本vim install_nginx.sh# 内容如下yum -y install wget gcc pcre-devel zlib-develwget http:&#x2F;&#x2F;ng">
+<meta property="og:description" content="简介 shell脚本 日常运维工作大部分是一些繁琐的重复的工作，每天80%的工作就是重复干昨天的事情，而且工作量还比较大，这就可以让机器操作这些工作。 一个简单脚本 123456789101112131415# 安装Nginx的脚本vim install_nginx.sh# 内容如下yum -y install wget gcc pcre-devel zlib-develwget http:&#x2F;&#x2F;n">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-03-29T11:45:04.000Z">
-<meta property="article:modified_time" content="2022-04-08T14:12:44.819Z">
+<meta property="article:modified_time" content="2022-04-14T14:56:20.530Z">
 <meta property="article:author" content="CodeChen">
 <meta property="article:tag" content="shell">
 <meta property="article:tag" content="Linux">
@@ -134,7 +134,7 @@
 
 
 
-  <title>shell-base | CodeChenBlog</title>
+  <title>shell入门 | CodeChenBlog</title>
   
 
 
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">shell-base</h1>
+          <h1 class="post-title" itemprop="name headline">shell入门</h1>
         
 
         <div class="post-meta">
@@ -334,6 +334,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -377,21 +399,24 @@
       
 
       
-        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><strong>shell脚本</strong></p>
+        <h1>简介</h1>
+<p><strong>shell脚本</strong></p>
 <p>日常运维工作大部分是一些繁琐的重复的工作，每天80%的工作就是重复干昨天的事情，而且工作量还比较大，这就可以让机器操作这些工作。</p>
 <p>一个简单脚本</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装Nginx的脚本</span></span><br><span class="line">vim install_nginx.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 内容如下</span></span><br><span class="line">yum -y install wget gcc pcre-devel zlib-devel</span><br><span class="line">wget http://nginx.org/download/nginx-1.16.0.tar.gz</span><br><span class="line">tar xf nginx-1.16.0.tar.gz</span><br><span class="line">cd nginx-1.16.0</span><br><span class="line">./configure --prefix=/usr/local/nginx</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 执行</span></span><br><span class="line">chmod 700 install_nginx.sh</span><br><span class="line">./install_nginx.sh</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="脚本规范"><a href="#脚本规范" class="headerlink" title="脚本规范"></a>脚本规范</h2><ul>
-<li><p>不要写中文，就算注释也最好不要中文</p>
+<h2 id="脚本规范">脚本规范</h2>
+<ul>
+<li>
+<p>不要写中文，就算注释也最好不要中文</p>
 </li>
-<li><p>#代表注释，#!不是注释，是表示运行的环境</p>
+<li>
+<p>#代表注释，#!不是注释，是表示运行的环境</p>
 </li>
-<li><p>脚本最好标明作者、创建时间、描述</p>
+<li>
+<p>脚本最好标明作者、创建时间、描述</p>
 </li>
-<li><p>脚本组成</p>
+<li>
+<p>脚本组成</p>
 <ul>
 <li>解释环境 #！/usr/bin/env bash|python|perl</li>
 <li>注释说明</li>
@@ -406,31 +431,27 @@
 <li>解释器直接运行，不需要给权限，直接bash install_nginx.sh</li>
 </ul>
 </blockquote>
-<h1 id="shell语法"><a href="#shell语法" class="headerlink" title="shell语法"></a>shell语法</h1><h2 id="shell中的特殊符号"><a href="#shell中的特殊符号" class="headerlink" title="shell中的特殊符号"></a>shell中的特殊符号</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">~:          家目录  # cd ~代表进入用户家目录</span><br><span class="line">!:          执行历史命令!!执行上一条命令</span><br><span class="line"><span class="meta">$</span><span class="bash">:          变量中取内容符</span></span><br><span class="line">+ - * 、 %:  对应数学运算加减乘除取余数</span><br><span class="line">&amp;:          后台执行</span><br><span class="line">*:          星号是shel1中的通配符匹配所有</span><br><span class="line">?:          问号是shell中的通配符―匹配除回车以外的一个字符</span><br><span class="line">;:          分号可以在shell中一行执行多个命令，命令之间用分号分割</span><br><span class="line">|:          管道符上一个命令的输出作为下一个命令的输入cat filename l grep &quot;abc&quot;</span><br><span class="line">\:          转义字符</span><br><span class="line">``:         反引号 命令中执行命令 echo &quot;today is `date +%F`&quot;</span><br><span class="line">&#x27; &#x27;:        单引号，脚本中字符串要用单引号引起来，但是不同于双引号的是，单引号不解释变量</span><br><span class="line">&quot; &quot;:        双引号，脚本中出现的字符串可以用双引号引起来</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>| 管道符在shell中使用时最多的，很多组合命令都需要通过组合命令来完成输出。管道符其实就是下一个命令对上一个命令的输出做处理</p>
-<h2 id="shell重定向"><a href="#shell重定向" class="headerlink" title="shell重定向"></a>shell重定向</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">     重定向输入 覆盖原数据</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;    重定向追加输入，在原数据的末尾添加</span></span><br><span class="line">&lt;     重定向输出 wc -l &lt; /etc/passwd</span><br><span class="line">&lt;&lt;    重定向追加输出 fdisk /dev/sdb &lt;&lt;EOF ...... EOF</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="shell数学运算"><a href="#shell数学运算" class="headerlink" title="shell数学运算"></a>shell数学运算</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">expr命令：只能做整数运算，格式比较古板，注意空格</span><br><span class="line">[root@VM-24-12-centos ~]# expr 1 + 1</span><br><span class="line">2</span><br><span class="line">[root@VM-24-12-centos ~]# expr 5 - 1</span><br><span class="line">4</span><br><span class="line">[root@VM-24-12-centos ~]# expr 5 \* 2  # 注意*出现应该转义，否则认为是通配符</span><br><span class="line">10</span><br><span class="line">[root@VM-24-12-centos ~]# expr 5 / 2</span><br><span class="line">2</span><br><span class="line">[root@VM-24-12-centos ~]# expr 5 % 2</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">使用bc计算器处理浮点运算，scale=2代表小数点保留两位</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;3+100&quot;|bc</span><br><span class="line">103</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;100-3&quot;|bc</span><br><span class="line">97</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;100/3&quot;|bc</span><br><span class="line">33.33</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;100*3&quot;|bc</span><br><span class="line">300</span><br></pre></td></tr></table></figure>
-
+<h1>shell语法</h1>
+<h2 id="shell中的特殊符号">shell中的特殊符号</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">~:          家目录  # cd ~代表进入用户家目录</span><br><span class="line">!:          执行历史命令!!执行上一条命令</span><br><span class="line"><span class="meta">$</span><span class="bash">:          变量中取内容符</span></span><br><span class="line">+ - * 、 %:  对应数学运算加减乘除取余数</span><br><span class="line">&amp;:          后台执行</span><br><span class="line">*:          星号是shel1中的通配符匹配所有</span><br><span class="line">?:          问号是shell中的通配符―匹配除回车以外的一个字符</span><br><span class="line">;:          分号可以在shell中一行执行多个命令，命令之间用分号分割</span><br><span class="line">|:          管道符上一个命令的输出作为下一个命令的输入cat filename l grep &quot;abc&quot;</span><br><span class="line">\:          转义字符</span><br><span class="line">``:         反引号 命令中执行命令 echo &quot;today is `date +%F`&quot;</span><br><span class="line">&#x27; &#x27;:        单引号，脚本中字符串要用单引号引起来，但是不同于双引号的是，单引号不解释变量</span><br><span class="line">&quot; &quot;:        双引号，脚本中出现的字符串可以用双引号引起来</span><br></pre></td></tr></table></figure>
+<h2 id="管道">管道</h2>
+<p>| 管道符在shell中使用时最多的，很多组合命令都需要通过组合命令来完成输出。管道符其实就是下一个命令对上一个命令的输出做处理</p>
+<h2 id="shell重定向">shell重定向</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">     重定向输入 覆盖原数据</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;    重定向追加输入，在原数据的末尾添加</span></span><br><span class="line">&lt;     重定向输出 wc -l &lt; /etc/passwd</span><br><span class="line">&lt;&lt;    重定向追加输出 fdisk /dev/sdb &lt;&lt;EOF ...... EOF</span><br></pre></td></tr></table></figure>
+<h2 id="shell数学运算">shell数学运算</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">expr命令：只能做整数运算，格式比较古板，注意空格</span><br><span class="line">[root@VM-24-12-centos ~]# expr 1 + 1</span><br><span class="line">2</span><br><span class="line">[root@VM-24-12-centos ~]# expr 5 - 1</span><br><span class="line">4</span><br><span class="line">[root@VM-24-12-centos ~]# expr 5 \* 2  # 注意*出现应该转义，否则认为是通配符</span><br><span class="line">10</span><br><span class="line">[root@VM-24-12-centos ~]# expr 5 / 2</span><br><span class="line">2</span><br><span class="line">[root@VM-24-12-centos ~]# expr 5 % 2</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">使用bc计算器处理浮点运算，scale=2代表小数点保留两位</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;3+100&quot;|bc</span><br><span class="line">103</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;100-3&quot;|bc</span><br><span class="line">97</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;100/3&quot;|bc</span><br><span class="line">33.33</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;100*3&quot;|bc</span><br><span class="line">300</span><br></pre></td></tr></table></figure>
 <p><strong>或者使用bc程序交互计算</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-24-12-centos ~]# bc</span><br><span class="line">bc 1.06.95</span><br><span class="line">Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006 Free Software Foundation, Inc.</span><br><span class="line">This is free software with ABSOLUTELY NO WARRANTY.</span><br><span class="line">For details type `warranty&#x27;. </span><br><span class="line">1+1</span><br><span class="line">2</span><br><span class="line">10-2</span><br><span class="line">8</span><br><span class="line">3*5</span><br><span class="line">15</span><br><span class="line">15/2</span><br><span class="line">7</span><br><span class="line"></span><br><span class="line">scale=2</span><br><span class="line">100/3</span><br><span class="line">33.33</span><br></pre></td></tr></table></figure>
-
 <p>脚本方式</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-24-12-centos ~]# echo &quot;scale=2;141*100/7966&quot;|bc</span><br><span class="line">1.77</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;`echo &quot;scale=2;141*100/7966&quot;|bc`%&quot;</span><br><span class="line">1.77%</span><br><span class="line">[root@VM-24-12-centos ~]# echo &quot;当前内存使用率：`echo &quot;scale=2;141*100/7966&quot;|bc`%&quot;</span><br><span class="line">当前内存使用率：1.77%</span><br></pre></td></tr></table></figure>
-
 <p>双小圆括号运算，在shell中(())也可以用来做数学运算</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-24-12-centos ~]# echo $((100+3))</span><br><span class="line">103</span><br><span class="line">[root@VM-24-12-centos ~]# echo $((100-3))</span><br><span class="line">97</span><br><span class="line">[root@VM-24-12-centos ~]# echo $((100/3))</span><br><span class="line">33</span><br><span class="line">[root@VM-24-12-centos ~]# echo $((100%3))</span><br><span class="line">1</span><br><span class="line">[root@VM-24-12-centos ~]# echo $((100**3))</span><br><span class="line">1000000</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="格式化输出echo"><a href="#格式化输出echo" class="headerlink" title="格式化输出echo"></a>格式化输出echo</h2><p>echo</p>
-<h2 id="shell基本输入"><a href="#shell基本输入" class="headerlink" title="shell基本输入"></a>shell基本输入</h2><p>read命令</p>
-<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><blockquote>
+<h2 id="格式化输出echo">格式化输出echo</h2>
+<p>echo</p>
+<h2 id="shell基本输入">shell基本输入</h2>
+<p>read命令</p>
+<h2 id="变量">变量</h2>
+<blockquote>
 <p>在编程中，我们总有一些数据需要临时存放在内存，以待后续使用时快速读出。内存在系统启动的时候被按照1B一个单位划分为若干个块，然后统一编号(16进制编号)，并对内存的使用情况做记录，保存在内存跟踪表中。</p>
 </blockquote>
 <p><strong>变量分类：</strong></p>
@@ -441,170 +462,89 @@
 <p>变量格式：变量名=值</p>
 <p>在shell编程中的变量名和等号之间不能有空格</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">变量名命名规则:</span><br><span class="line">	命名只能使用英文字母，数字和下划线，首个字符不能以数字开头。</span><br><span class="line">	中间不能有空格，可以使用下划线(_)。</span><br><span class="line">	不能使用标点符号。</span><br><span class="line">	不能使用bash里的关键字(可用help命令查看保留关键字)。</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>读取变量内容：</strong></p>
 <p>读取变量内容符：$</p>
 <p>读取方法：$变量名</p>
 <p><strong>取消变量unset：</strong></p>
 <p>unset name</p>
 <p><strong>定义全局变量export：</strong></p>
-<p>export name=’codechen’</p>
+<p>export name=‘codechen’</p>
 <p>上述设置的变量其实都是一次性变量,系统重启就会丢失。</p>
 <p>如果希望本地变量或者全局变量可以永久使用，可以将需要设置的变量写入变量文件中即可。</p>
 <p><strong>定义永久变量：</strong></p>
 <p>本地变量:用户私有变量，只有本用户可以使用，保存在家目录下的.bash_profile、.bashrc文件中</p>
 <p>全局变量:所有用户都可以使用，保存在/etc/profile、letc/bashrc文件中</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">本地变量</span><br><span class="line">[root@www ~]#tail -1 ~/.bash_profile</span><br><span class="line">name=&#x27;codechen&#x27;</span><br><span class="line"></span><br><span class="line">全局变量</span><br><span class="line">[root@www ~]# tail -1 /etc/profile</span><br><span class="line">export age=30</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p><strong>语法：</strong></p>
+<h2 id="数组">数组</h2>
+<p><strong>语法：</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数组名称=(元素1 元素2 元素3 ...)</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>数组读出</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">&#123;数组名称[索引]&#125;</span></span><br><span class="line">索引默认是元素在数组中的排队编号，默认第一个从0开始</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>数组赋值</strong></p>
 <p>方法一：一次赋一个值</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array0[0]=&#x27;tom&#x27;</span><br><span class="line">array0[1]=&#x27;jerry&#x27;</span><br><span class="line">array0[2]=&#x27;marry&#x27;</span><br></pre></td></tr></table></figure>
-
 <p>方法二：一次赋多个值</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">array2=(tom jack alice)</span><br><span class="line">array3=(`cat /etc/passwd`)   # 希望是将该文件中的每行作为一个元素赋值给数组array3</span><br><span class="line">array4=(`ls /var/ftp/Shell/for*`)</span><br><span class="line">array5=(tom jack alice &quot;bash shell&quot;)</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>查看数组</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">declare</span> -a</span></span><br><span class="line">declare -a array1=&#x27;([0]=&quot;pear&quot; [1]=&quot;apple&quot; [2]=&quot;orange&quot; [3]=&quot;peach&quot;)&#x27;</span><br><span class="line">declare -a array2=&#x27;([0]=&quot;pear&quot; [1]=&quot;jack&quot; [2]=&quot;alice&quot;)&#x27;</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>访问数组元素</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo $&#123;array1[0]&#125;       # 访问数组中的第一元素</span><br><span class="line">echo $&#123;array1[@]&#125;       # 访问数组中所有元素等同于echo $&#123;array1[*]&#125;</span><br><span class="line">echo $&#123;#array1[@]&#125;      # 统计数组元素的个数</span><br><span class="line">echo $&#123;!array1[@]&#125;      # 获取数组元素的索引</span><br><span class="line">echo $&#123;array1[@]:1&#125;     # 从数组小标1开始</span><br><span class="line">echo $&#123;#array1[@]:1:2&#125;  # 从数组小标1开始，访问两个元素</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>遍历数组</strong></p>
 <ul>
-<li><p>默认数组通过数组元素的个数进行遍历</p>
+<li>
+<p>默认数组通过数组元素的个数进行遍历</p>
 </li>
-<li><p>针对关联数组可以通过数组元素的索引进行遍历</p>
+<li>
+<p>针对关联数组可以通过数组元素的索引进行遍历</p>
 </li>
 </ul>
-<h2 id="关联数组"><a href="#关联数组" class="headerlink" title="关联数组"></a>关联数组</h2><p>关联数组可以允许用户自定义数组的索引，这样使用起来更加方便、高效</p>
+<h2 id="关联数组">关联数组</h2>
+<p>关联数组可以允许用户自定义数组的索引，这样使用起来更加方便、高效</p>
 <p><strong>定义关联数组</strong></p>
 <p>申明关联数组变量</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">declare -A ass_array1</span><br><span class="line">declare -A ass_array2</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>关联数组赋值</strong></p>
 <p>方法一：一次赋一个值</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 数组名[索引]=变量值</span></span><br><span class="line">ass_array1[index1]=peer</span><br><span class="line">ass_array1[index2]=apple</span><br><span class="line">ass_array1[index3]=orange</span><br><span class="line">ass_array1[index4]=peach</span><br></pre></td></tr></table></figure>
-
 <p>方法二：一次赋多个值</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ass_array2=([index1]=tom [index2]=jack [index3]=alice [index4]=&#x27;bash shell&#x27;)</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>查看数组</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">declare</span> -A</span></span><br><span class="line">declare -A ass_array1=&#x27;([lindex4]=&quot;peach&quot; [index1]=&quot;pear&quot; [index2]=&quot;apple&quot; [index3]=&quot;orange&quot;)&quot;</span><br><span class="line">declare -A ass_array2=&#x27;([Iindex4]=&quot;bash shell&quot; [index1]=&quot;tom&quot; [index2]=&quot;jack&quot; [index3]=&quot;alice&quot;)&#x27;</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>访问数组元素</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo $&#123;ass_array2[index2]&#125;   # 访问数组中的第二个元数</span><br><span class="line">echo $&#123;ass_array2[@]&#125;        # 访问数组中所有元数等同于 echo $&#123;array1[*]&#125;</span><br><span class="line">echo $&#123;#ass_array2[@]&#125;       # 获得数组元数的个数</span><br><span class="line">echo $&#123;!ass_array2[@]&#125;       # 获得数组元数的索引</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>遍历数组</strong></p>
 <p>通过数组元数的索引进行遍历,针对关联数组可以通过数组元素的索引进行遍历</p>
-<h2 id="shell流程控制-if判断语句"><a href="#shell流程控制-if判断语句" class="headerlink" title="shell流程控制-if判断语句"></a>shell流程控制-if判断语句</h2><p><strong>一、shell中的运算</strong></p>
+<h2 id="shell流程控制-if判断语句">shell流程控制-if判断语句</h2>
+<p><strong>一、shell中的运算</strong></p>
 <p><strong>数学比较运算</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-eq   # 等于</span><br><span class="line">-gt   # 大于</span><br><span class="line">-lt   # 小于</span><br><span class="line">-ge   # 大于或等于</span><br><span class="line">-le   # 小于或等于</span><br><span class="line">-ne   # 不等于</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>字符串比较运算</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 运算符解释，注意字符串一定别忘了使用引号引起来</span></span><br><span class="line">==   # 等于</span><br><span class="line">!=   # 不等于</span><br><span class="line">-n   # 检查字符串的长度是否大于e</span><br><span class="line">-z   # 检查字符串的长度是否为e</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>文件比较检查</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-d   # 检查文件是否存在且为目录</span><br><span class="line">-e   # 检查文件是否存在</span><br><span class="line">-f   # 检查文件是否存在且为文件</span><br><span class="line">-r   # 检查文件是否存在且可读</span><br><span class="line">-s   # 检查文件是否存在且不为空</span><br><span class="line">-w   # 检查文件是否存在且可写</span><br><span class="line">-x   # 检查文件是否存在且可执行</span><br><span class="line">-o   # 检查文件是否存在并且被当前用户拥有</span><br><span class="line">-G   # 检查文件是否存在并且默认组为当前用户组</span><br><span class="line">file1 -nt file2   # 检查file1是否比file2新</span><br><span class="line">file1 -ot file2   # 检查file1是否比file2日</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>逻辑运算</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;&amp;   # 逻辑与运算</span><br><span class="line">||   # 逻辑或运算</span><br><span class="line">！   # 逻辑非运算</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>赋值运算</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=   # 赋值运算符   a=10   name=&#x27;baism&#x27;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h3><p>语法：</p>
+<h3 id="if语句">if语句</h3>
+<p>语法：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 一</span></span><br><span class="line">if [ condition ]</span><br><span class="line">	then</span><br><span class="line">		commands</span><br><span class="line">fi</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 二</span></span><br><span class="line">if [ condition ]</span><br><span class="line">	then</span><br><span class="line">		commands</span><br><span class="line">else</span><br><span class="line">		commands</span><br><span class="line">fi</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 三</span></span><br><span class="line">if [ condition ]</span><br><span class="line">	then</span><br><span class="line">		commands</span><br><span class="line">elif [ condition ]</span><br><span class="line">	then</span><br><span class="line">		commands</span><br><span class="line">else</span><br><span class="line">		commands</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="shell流程控制-for循环语句"><a href="#shell流程控制-for循环语句" class="headerlink" title="shell流程控制-for循环语句"></a>shell流程控制-for循环语句</h2><p>语法一：直接赋值</p>
+<h2 id="shell流程控制-for循环语句">shell流程控制-for循环语句</h2>
+<p>语法一：直接赋值</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for var in value1 value2 ......</span><br><span class="line">	do</span><br><span class="line">		commands</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
 <p>语法二：命令赋值</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for var in `seq 1 9`</span><br></pre></td></tr></table></figure>
-
 <p>语法三：赋值是一个字符串</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for var in baism\&#x27;s is cool, baism\&#x27;s is nice</span><br><span class="line">	do</span><br><span class="line">		echo &quot;word: $var&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="循环控制语句"><a href="#循环控制语句" class="headerlink" title="循环控制语句"></a>循环控制语句</h2><p><strong>sleep N脚本执行到该步休眠N秒</strong></p>
+<h2 id="循环控制语句">循环控制语句</h2>
+<p><strong>sleep N脚本执行到该步休眠N秒</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">echo -n&quot;倒计时: &quot;</span><br><span class="line">for i in &#x27;seq 9 -1 1`</span><br><span class="line">	do</span><br><span class="line">		echo -n -e &quot; \b$i&quot;</span><br><span class="line">		sleep 1</span><br><span class="line">done</span><br><span class="line">echo</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>continue跳过循环中的某次循环</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for ((i=1;i&lt;10;i++))</span><br><span class="line">	do</span><br><span class="line">		if [ $i -eq 5 ]</span><br><span class="line">			then</span><br><span class="line">				continue</span><br><span class="line">		else</span><br><span class="line">				echo $i</span><br><span class="line">		fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>break跳出循环继续执行后续代码</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for i in &#x27;seq 1 9`</span><br><span class="line">	do</span><br><span class="line">		echo $i</span><br><span class="line">		if [ $i -eq 5 ]</span><br><span class="line">			then</span><br><span class="line">				break</span><br><span class="line">		fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h1 id="案例分享–学员信息系统"><a href="#案例分享–学员信息系统" class="headerlink" title="案例分享–学员信息系统"></a>案例分享–学员信息系统</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">for ((i=0;i&lt;3;i++))</span><br><span class="line">        do</span><br><span class="line">                read -p &quot;输入第$((i + 1))个人名：&quot; name[$i]</span><br><span class="line">                read -p &quot;输入第$[$i + 1]个年龄：&quot; age[$i]</span><br><span class="line">                read -p &quot;输入第`expr $i + 1`个性别：&quot; gender[$i]</span><br><span class="line">        done</span><br><span class="line"></span><br><span class="line">clear</span><br><span class="line">        echo -e &quot;\t\t\t\t学员查询系统&quot;</span><br><span class="line">while :</span><br><span class="line">        do</span><br><span class="line">                cp=0</span><br><span class="line">                read -p &quot;输入要查询的姓名：&quot; xm</span><br><span class="line">                [ $xm == &quot;Q&quot; ]&amp;&amp;exit</span><br><span class="line">                for ((i=0;i&lt;3;i++))</span><br><span class="line">                        do</span><br><span class="line">                                if [ &quot;$xm&quot; == &quot;$&#123;name[$i]&#125;&quot; ];then</span><br><span class="line">                                        echo &quot;$&#123;name[$i]&#125; $&#123;age[$i]&#125; $&#123;gender[$i]&#125;&quot;</span><br><span class="line">                                        cp=1</span><br><span class="line">                                fi</span><br><span class="line">                        done</span><br><span class="line"></span><br><span class="line">                        [ $cp -eq 0 ]&amp;&amp;echo &quot;not found student&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
+<h1>案例分享–学员信息系统</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">for ((i=0;i&lt;3;i++))</span><br><span class="line">        do</span><br><span class="line">                read -p &quot;输入第$((i + 1))个人名：&quot; name[$i]</span><br><span class="line">                read -p &quot;输入第$[$i + 1]个年龄：&quot; age[$i]</span><br><span class="line">                read -p &quot;输入第`expr $i + 1`个性别：&quot; gender[$i]</span><br><span class="line">        done</span><br><span class="line"></span><br><span class="line">clear</span><br><span class="line">        echo -e &quot;\t\t\t\t学员查询系统&quot;</span><br><span class="line">while :</span><br><span class="line">        do</span><br><span class="line">                cp=0</span><br><span class="line">                read -p &quot;输入要查询的姓名：&quot; xm</span><br><span class="line">                [ $xm == &quot;Q&quot; ]&amp;&amp;exit</span><br><span class="line">                for ((i=0;i&lt;3;i++))</span><br><span class="line">                        do</span><br><span class="line">                                if [ &quot;$xm&quot; == &quot;$&#123;name[$i]&#125;&quot; ];then</span><br><span class="line">                                        echo &quot;$&#123;name[$i]&#125; $&#123;age[$i]&#125; $&#123;gender[$i]&#125;&quot;</span><br><span class="line">                                        cp=1</span><br><span class="line">                                fi</span><br><span class="line">                        done</span><br><span class="line"></span><br><span class="line">                        [ $cp -eq 0 ]&amp;&amp;echo &quot;not found student&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -770,7 +710,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -781,7 +721,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -850,7 +790,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E8%A7%84%E8%8C%83"><span class="nav-text">脚本规范</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shell%E8%AF%AD%E6%B3%95"><span class="nav-text">shell语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="nav-text">shell中的特殊符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E9%81%93"><span class="nav-text">管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-text">shell重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E6%95%B0%E5%AD%A6%E8%BF%90%E7%AE%97"><span class="nav-text">shell数学运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BAecho"><span class="nav-text">格式化输出echo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5"><span class="nav-text">shell基本输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E6%95%B0%E7%BB%84"><span class="nav-text">关联数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6-if%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5"><span class="nav-text">shell流程控制-if判断语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if%E8%AF%AD%E5%8F%A5"><span class="nav-text">if语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6-for%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-text">shell流程控制-for循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="nav-text">循环控制语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB%E2%80%93%E5%AD%A6%E5%91%98%E4%BF%A1%E6%81%AF%E7%B3%BB%E7%BB%9F"><span class="nav-text">案例分享–学员信息系统</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E8%A7%84%E8%8C%83"><span class="nav-text">脚本规范</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">shell语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="nav-text">shell中的特殊符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E9%81%93"><span class="nav-text">管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-text">shell重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E6%95%B0%E5%AD%A6%E8%BF%90%E7%AE%97"><span class="nav-text">shell数学运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BAecho"><span class="nav-text">格式化输出echo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5"><span class="nav-text">shell基本输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E6%95%B0%E7%BB%84"><span class="nav-text">关联数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6-if%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5"><span class="nav-text">shell流程控制-if判断语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if%E8%AF%AD%E5%8F%A5"><span class="nav-text">if语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6-for%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-text">shell流程控制-for循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="nav-text">循环控制语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">案例分享–学员信息系统</span></a></li></ol></div>
             
 
           </div>
